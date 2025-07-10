@@ -20,3 +20,29 @@ dlg = app.window(title_re=".*" + restaurant_type + ".*")
 # dlg.print_control_identifiers()
 
 inputText(dlg, 3, "PAX")
+
+
+
+if paxMoveTo and mark_prods and moveTo:
+            clickBtn(dlg, 'TABLE\r\nFUNCTION')
+            for mark_prod in mark_prods :
+                clickNonBtn(dlg, mark_prod, control_type='TEXT')
+                clickBtn(dlg, 'MARK')
+
+            clickBtn(dlg, 'MOVE TO')
+            clickBtn(dlg, moveTo)
+            inputText(dlg, paxMoveTo, "PAX")
+            send_keys("{ENTER}")
+            clickBtn(dlg, 'OK')
+            #clickKeypad(dlg, 'check')
+            # clickBtn(dlg, 'FINAL\r\nPAYMENT')
+            # clickBtn(dlg, 'CASH')
+            # clickKeypad(dlg, 'exact amount')
+            # clickBtn(dlg, 'OK')
+            # inputText(dlg, cashier.cashier_id, "Server")
+            # send_keys("{ENTER}")
+            # clickBtn(dlg, moveTo)
+            # clickKeypad(dlg, 'check')
+            # clickBtn(dlg, 'FINAL\r\nPAYMENT')
+            # clickBtn(dlg, 'CASH')
+            # clickKeypad(dlg, 'exact amount')

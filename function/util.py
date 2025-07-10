@@ -7,6 +7,7 @@ from function.clickButton import clickKeypad
 def checkIfExist(dlg, name, control_type = "Button"): 
     child = dlg.child_window(title=name, control_type=control_type)
     if(child.exists()):
+        print(f"'{name}' is exist")
         return True
     return False
 
