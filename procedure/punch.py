@@ -2,8 +2,11 @@ from typing import List, Optional
 from function.clickButton import clickBtn
 from function.clickButton import clickKeypad
 from function.util import checkIfExist
+from function.util import checkIfExistVisibleClickable
+from function.util import checkIfExistEscapeSpecChars
 from function.clickButton import clickNonBtn
 from tender.clickTender import clickTender
+from function.input import inputText
 from handles.cashier_sign_setup_table import cashier_sign_setup_table
 from handles.initial_punch import initial_punch
 from handles.store_order import store_order
@@ -14,7 +17,12 @@ from handles.zero_rated import zero_rated
 from handles.cust_info import cust_info
 from handles.discount import discount
 from handles.tender_amount import tender_amount
+from handles.move_prod_other_table import move_prod_other_table
+from handles.change_pax import change_pax
+from handles.split_table import split_table
 from configuration.config import config
+from pywinauto.keyboard import send_keys
+from handles.split_bill import split_bill
 
 def punch(dlg: any,
     prod: List[str],
@@ -23,14 +31,19 @@ def punch(dlg: any,
     tenders: List[str],
     amounts: Optional[List[str]] = None,
     disc: Optional[str] = None,
-    isFinalPayment= False,
-    isZeroRated= False,
+    tender_disc: Optional[str] = None,
+    isFinalPayment = False,
+    isZeroRated = False,
     isInputCustInfo = False,
+    is_split_table = False,
+    is_print_bill = False,
     pax=1,
     dc_pax=1,
+    changePax=None,
     moveTo : Optional[str] = None,
     paxMoveTo : Optional[int] = None,
     mark_prods : Optional[List[str]] = None,
+    split_bill_pax : Optional[int] = None,
     cancel_prod: Optional[List[str]] = None,
     prod_addons :  Optional[List[str]] = None ,
     qty_prod_addons :  Optional[List[int]] = None ,
@@ -44,8 +57,9 @@ def punch(dlg: any,
     meal_components : Optional[List[str]] = None ,
     qty_meal_components : Optional[List[int]] = None,
     dito : Optional[List[int]] = None,
-    transfers : Optional[List[str]] = None
-    
+    transfers : Optional[List[str]] = None,
+    open_memo : Optional[List[str]] = None,
+    open_memo_prod : Optional[List[str]] = None
 ):  
     
     dine_in = config.dine_in
@@ -75,12 +89,19 @@ def punch(dlg: any,
     if dito is None:
         dito = [None] * len(prod)
         
-    for index, (product, qty, parent, qpa, add_on, mc, qmc, si, psi, qsi, dt) in enumerate(zip(prod, counts, prod_parent, qty_prod_addons, prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito )):
-        
-        initial_punch(dlg, qty, product,parent, dt, index, qmc,mc, add_on, qpa, psi, si, qsi, prod_parent)
+   
+    initial_punch(dlg, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito, open_memo, open_memo_prod)
 
     clickKeypad(dlg, 'check') #after punching check to go to tender section
     
+    if split_bill_pax:
+        split_bill(dlg, split_bill_pax, pax)
+
+    if is_print_bill:
+        if split_bill_pax:
+            split_bill(dlg, split_bill_pax, pax)
+        clickBtn(dlg, 'PRINT\r\nBILL')
+
     if isFinalPayment==False :
         store_order(dlg, cashier.cashier_id, dine_in.table)
         
@@ -94,15 +115,24 @@ def punch(dlg: any,
         add_product(dlg, additional_prod_parent, additional_prod, additional_count, additional_addons)
 
     if moveTo and paxMoveTo and mark_prods:
-        clickBtn(dlg, 'TABLE\r\nFUNCTION')
-        for mark_prod in mark_prods:
-            clickNonBtn(dlg, mark_prod)
-            clickBtn(dlg, 'MARK')
-        clickBtn(dlg, 'MOVE TO')
-        
+        move_prod_other_table(dlg, mark_prods, moveTo, pax, cashier.cashier_id)
+
+    if changePax:
+        change_pax(dlg, changePax)
+    
+    if is_split_table:
+       split_table(dlg, mark_prods, cashier.cashier_id, dine_in.table)
+
     if(isFinalPayment==False):
         clickKeypad(dlg, 'check')
+
+    if tender_disc :
+        discount(dlg,manager.manager_id, manager.manager_pass, tender_disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style, 20, dc_pax)
+
     
+    if split_bill_pax:
+        split_bill(dlg, split_bill_pax, pax)
+
     clickBtn(dlg, 'FINAL\r\nPAYMENT')
 
     if(isZeroRated):
@@ -113,11 +143,12 @@ def punch(dlg: any,
 
     if(disc):
         discount(dlg,manager.manager_id, manager.manager_pass, disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style, 20, dc_pax)
-    
+        
     tender_amount(dlg, amounts, tenders)
 
     # para sure na fully tender talaga
-    if checkIfExist(dlg, 'CASH'):
+    if checkIfExistVisibleClickable(dlg, 'CASH') and not checkIfExist(dlg, 'VQP', control_type='Window'):
+        print('Amount tendered not sufficient tender cash exact amount')
         clickTender(dlg, 'CASH')
     
     #kapag  maglalabas ng OK to print acc copy
@@ -125,3 +156,5 @@ def punch(dlg: any,
         clickBtn(dlg, 'OK')
 
 
+
+    

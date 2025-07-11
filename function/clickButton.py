@@ -120,6 +120,27 @@ def clickNonBtn(dlg, button_name, retries=3, delay=2, control_type="Button", sec
 
     print(f"Failed to click '{button_name}' after {retries} attempts.")
 
+# def clickNonBtn(dlg, button_name, control_type="Text", retries=3, delay=2):
+#     """Click the first matching control even if there are duplicates."""
+#     from pywinauto.findwindows import find_elements
+
+#     for attempt in range(retries):
+#         try:
+#             # Find all matching elements
+#             elements = find_elements(title=button_name, control_type=control_type, parent=dlg.element_info)
+#             if not elements:
+#                 raise Exception("No matching elements found.")
+
+#             # Click the first one
+#             dlg.child_window(handle=elements[0].handle).wrapper_object().click_input()
+#             print(f"Clicked '{button_name}' successfully.")
+#             return
+#         except Exception as e:
+#             print(f"Attempt {attempt + 1}: Failed to click '{button_name}' - {e}")
+#             time.sleep(delay)
+
+#     print(f"Failed to click '{button_name}' after {retries} attempts.")
+
 
     
 def clickBlkRecallBtn(dlg, btn_name):

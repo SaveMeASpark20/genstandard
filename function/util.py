@@ -41,3 +41,21 @@ def checkIfExistWithTitleRe(dlg, name, control_type = "Button"):
         return True
     return False
 
+
+def checkIfExistEscapeSpecChars(dlg, name, control_type="Button"):
+    pattern = re.compile(f".*{re.escape(name)}.*")  # escape any special characters
+    try:
+        child = dlg.child_window(title_re=pattern, control_type=control_type)
+        if child.exists(timeout=1):
+            return True
+    except Exception as e:
+        print(f"Error: {e}")
+    return False
+
+
+def checkIfExistVisibleClickable(dlg, name, control_type = "Button"): 
+    child = dlg.child_window(title=name, control_type=control_type)
+    if child.exists() and child.is_enabled() and child.is_visible():
+        print(f"'{name}' is exist")
+        return True
+    return False

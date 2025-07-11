@@ -1,48 +1,57 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from pywinauto import Application
-import time
-from configuration.config import config
-from pywinauto.keyboard import send_keys
-from function.clickButton import clickDeliveryBtn
-from function.clickButton import clickBtn
-from function.clickButton import clickKeypad
-from function.input import inputText
-from function.input import inputTextByIndex
-from function.util import checkIfExist
-from function.util import checkIfExistWithRegex
-from sequence.transanctions import delivery
-from configuration.config import config
+from pywinauto.findwindows import ElementNotFoundError
+from sequence.managerSignon import managerSignon
 from sequence.openGo import openGo
-"""Connects to the FASTFOOD application and clicks a button."""
-restaurant_type = config.restaurant_type
-# listToRun = config.run_main
-app = Application(backend='uia').connect(title_re=".*" + restaurant_type + ".*")
-dlg = app.window(title_re=".*" + restaurant_type + ".*")
-# dlg.print_control_identifiers()
-
-inputText(dlg, 3, "PAX")
+from configuration.config import config
+from transaction.dinein import bacchusDineIn
+from sequence.cashierSignon import cashierSignon
+from pywinauto.findwindows import find_elements
+from function.clickButton import clickBtn
 
 
 
-if paxMoveTo and mark_prods and moveTo:
-            clickBtn(dlg, 'TABLE\r\nFUNCTION')
-            for mark_prod in mark_prods :
-                clickNonBtn(dlg, mark_prod, control_type='TEXT')
-                clickBtn(dlg, 'MARK')
+def main(backend="uia"):
+    try:
+        windows = find_elements(title_re=".*" +  "W I N V Q P" + ".*", control_type="Window", backend="uia")
+        app1, app2 = None, None
+        dlg1, dlg2 = None, None
+        
+        if windows is None:
+            dlg1 = openGo()
+        for elem in windows:
+            app = Application(backend="uia").connect(handle=elem.handle)
+            dlg = app.window(handle=elem.handle)
 
-            clickBtn(dlg, 'MOVE TO')
-            clickBtn(dlg, moveTo)
-            inputText(dlg, paxMoveTo, "PAX")
-            send_keys("{ENTER}")
-            clickBtn(dlg, 'OK')
-            #clickKeypad(dlg, 'check')
-            # clickBtn(dlg, 'FINAL\r\nPAYMENT')
-            # clickBtn(dlg, 'CASH')
-            # clickKeypad(dlg, 'exact amount')
-            # clickBtn(dlg, 'OK')
-            # inputText(dlg, cashier.cashier_id, "Server")
-            # send_keys("{ENTER}")
-            # clickBtn(dlg, moveTo)
-            # clickKeypad(dlg, 'check')
-            # clickBtn(dlg, 'FINAL\r\nPAYMENT')
-            # clickBtn(dlg, 'CASH')
-            # clickKeypad(dlg, 'exact amount')
+            if dlg.child_window(title="01", control_type="Text").exists():
+                app1 = app
+                
+                print("Identified App 1 (with '01')")
+            elif dlg.child_window(title="T1", control_type="Text").exists():
+                app2 = app
+                print("Identified App 2 (with 'T1')")
+
+        dlg1 = app1.window(title_re=".*" + "W I N V Q P" + ".*")
+
+        if(app2):
+            dlg2 = app2.window(title_re=".*" + "W I N V Q P" + ".*")
+
+    except ElementNotFoundError:
+        if dlg1 is None:
+            dlg1 = openGo()
+
+        
+    clickBtn(dlg1, 'DINE IN')
+    
+    if dlg2 is None:
+        dlg2 = openGo(is_OTK=True)
+        managerSignon(dlg2)
+        clickBtn(dlg2, 'DINE IN')
+    
+
+if __name__ == "__main__":
+    main()
+
+    

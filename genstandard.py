@@ -9,6 +9,8 @@ from configuration.config import config
 from transaction.dinein import bacchusDineIn
 from sequence.cashierSignon import cashierSignon
 
+
+
 def main(backend="uia"):
     """Connects to the FAST FOOD/FINE DINING application and clicks a button."""
     app=None
