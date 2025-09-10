@@ -2,37 +2,35 @@ import subprocess
 import os
 import time
 from pywinauto import Application
-from pywinauto.findwindows import ElementNotFoundError
 from pywinauto.findwindows import find_elements
 from configuration.config import config
 
-def openGo(is_OTK=False):
-    pos_no = None
-    if is_OTK:
-        bat_path = config.go_bat_loc_OTK
-        pos_no = config.POS
-    else :
-        bat_path = config.go_bat_loc
-        pos_no = config.OTK
-        
+def openGo(is_OTK=False, backend="uia"):
+    pos_no = config.OTK if is_OTK else config.POS
+    bat_path = config.go_bat_loc_OTK if is_OTK else config.go_bat_loc
     work_dir = os.path.dirname(bat_path)
 
-    subprocess.Popen(['cmd.exe', '/c', 'start', '', bat_path], cwd=work_dir, shell=True)
+    print(f"Launching GO.BAT → {'OTK' if is_OTK else 'POS'}: {bat_path}")
+    subprocess.Popen(['start', 'cmd.exe', '/k', bat_path], shell=True, cwd=work_dir)
 
-    print("Waiting for main app window...")
-    windows = find_elements(title_re=".*" +  "W I N V Q P" + ".*", control_type="Window", backend="uia")
-    
-    for _ in range(30):  # wait up to 30 seconds
-        try:
-            for elem in windows:
-                app= Application(backend="uia").connect(handle=elem.handle) 
+
+    print("⏳ Waiting for main app window...")
+
+    for count in range(30):
+        print(f"⏱️  Waiting... {count + 1}s")
+        windows = find_elements(title_re=".*W I N V Q P.*", control_type="Window", backend=backend)
+
+        for elem in windows:
+            try:
+                app = Application(backend=backend).connect(handle=elem.handle)
                 dlg = app.window(handle=elem.handle)
                 if dlg.child_window(title=pos_no, control_type="Text").exists():
+                    print("✅ WINVQP is running!")
                     return dlg
-                
-        except ElementNotFoundError:
-            time.sleep(1)
+            except Exception as e:
+                print(f"⚠️ Error connecting: {e}")
+        
+        time.sleep(1)
 
-    print("App window not found.")
+    print("❌ App window not found after 30s.")
     return None
-

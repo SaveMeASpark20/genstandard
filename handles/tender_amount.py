@@ -2,7 +2,7 @@ from tender.clickTender import clickTender
 
 def tender_amount(dlg, amounts, tenders):
     
-    if amounts  :
+    if amounts :
         for tender, amount in zip(tenders, amounts):
             # tender_status:
             #  1 = "amount tendered",
@@ -14,4 +14,5 @@ def tender_amount(dlg, amounts, tenders):
                     return
     else :
         for tender in tenders:
+            print(f"ito ba yung na aano? {tender}")
             clickTender(dlg, tender)

@@ -23,8 +23,10 @@ from handles.split_table import split_table
 from configuration.config import config
 from pywinauto.keyboard import send_keys
 from handles.split_bill import split_bill
+from sequence.backMgrMenu import clickBckMgrMenu
+import time
 
-def punch(dlg: any,
+def punch_OTK(dlg1: any, dlgOTK: any,
     prod: List[str],
     prod_parent : List[str],
     counts: List[int],
@@ -61,12 +63,17 @@ def punch(dlg: any,
     open_memo : Optional[List[str]] = None,
     open_memo_prod : Optional[List[str]] = None
 ):  
+    dlg = dlg1
+    dlg2 = dlgOTK
     
     dine_in = config.dine_in
     cashier = config.cashier_cred
     manager = config.manager_cred
 
-    cashier_sign_setup_table(dlg, cashier.cashier_id, dine_in.table, pax)
+    clickBtn(dlg2, 'DINE IN')
+
+
+    cashier_sign_setup_table(dlg2, cashier.cashier_id, dine_in.table, pax)
 
     if prod_addons is None:
         prod_addons = [None] * len(prod)
@@ -90,49 +97,65 @@ def punch(dlg: any,
         dito = [None] * len(prod)
         
    
-    initial_punch(dlg, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito, open_memo, open_memo_prod)
+    initial_punch(dlg2, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito, open_memo, open_memo_prod)
 
-    clickKeypad(dlg, 'check') #after punching check to go to tender section
+    clickKeypad(dlg2, 'check') #after punching check to go to tender section
     
     if split_bill_pax:
-        split_bill(dlg, split_bill_pax, pax)
+        split_bill(dlg2, split_bill_pax, pax)
+        
+    # if isFinalPayment==False :
+    store_order(dlg2, cashier.cashier_id, dine_in.table)
+
+
+
+    # if transfers:
+    #     transfer(dlgOTK, transfers)
+
+    # if cancel_prod :   
+    #     cancel_product(dlgOTK, cancel_prod, isFinalPayment, manager.manager_id, manager.manager_pass)
+    
+    # if additional_prod and additional_count and additional_prod_parent:
+    #     add_product(dlgOTK, additional_prod_parent, additional_prod, additional_count, additional_addons)
+
+    # if moveTo and paxMoveTo and mark_prods:
+    #     move_prod_other_table(dlgOTK, mark_prods, moveTo, pax, cashier.cashier_id)
+
+    # if changePax:
+    #     change_pax(dlgOTK, changePax)
+    
+    # if is_split_table:
+    #    split_table(dlgOTK, mark_prods, cashier.cashier_id, dine_in.table)
+    clickKeypad(dlg2, 'check') 
+
+    if tender_disc :
+        discount(dlg2, manager.manager_id, manager.manager_pass, tender_disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style, 20, dc_pax)
 
     if is_print_bill:
         if split_bill_pax:
-            split_bill(dlg, split_bill_pax, pax)
-        clickBtn(dlg, 'PRINT\r\nBILL')
-
-    if isFinalPayment==False :
-        store_order(dlg, cashier.cashier_id, dine_in.table)
+            split_bill(dlg2, split_bill_pax, pax)
         
-    if transfers:
-        transfer(dlg, transfers, 'Text')
+        clickBtn(dlg2, 'PRINT\r\nBILL')
 
-    if cancel_prod :   
-        cancel_product(dlg, cancel_prod, isFinalPayment, manager.manager_id, manager.manager_pass)
+        inputText(dlg2, cashier.cashier_id, "Server")
+        send_keys("{ENTER}")
+        clickBtn(dlg2, dine_in.table )
+        if checkIfExist(dlg2, "Bill Already Printed!", control_type='Text') or checkIfExist(dlg2, "VQP", control_type='Window'):
+            print(f"Bill Already Printed Click OK")
+            clickBtn(dlg2, 'OK')
+        clickBckMgrMenu(dlg2, 'MAIN MENU')
+
+    dlg.set_focus()
+    if checkIfExist(dlg, 'DINE IN'):
+        clickBtn(dlg, 'DINE IN')
     
-    if additional_prod and additional_count and additional_prod_parent:
-        add_product(dlg, additional_prod_parent, additional_prod, additional_count, additional_addons)
-
-    if moveTo and paxMoveTo and mark_prods:
-        move_prod_other_table(dlg, mark_prods, moveTo, pax, cashier.cashier_id)
-
-    if changePax:
-        change_pax(dlg, changePax)
-    
-    if is_split_table:
-       split_table(dlg, mark_prods, cashier.cashier_id, dine_in.table)
-
-    if(isFinalPayment==False):
-        clickKeypad(dlg, 'check')
-
-    if tender_disc :
-        discount(dlg,manager.manager_id, manager.manager_pass, tender_disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style, 20, dc_pax)
-
+    cashier_sign_setup_table(dlg, cashier.cashier_id, dine_in.table)
     
     if split_bill_pax:
         split_bill(dlg, split_bill_pax, pax)
 
+    if(isFinalPayment==False):
+        clickKeypad(dlg, 'check')
     clickBtn(dlg, 'FINAL\r\nPAYMENT')
 
     if(isZeroRated):
@@ -143,18 +166,20 @@ def punch(dlg: any,
 
     if(disc):
         discount(dlg,manager.manager_id, manager.manager_pass, disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style, 20, dc_pax)
-        
+
     tender_amount(dlg, amounts, tenders)
-    
 
     # para sure na fully tender talaga
-    if checkIfExistVisibleClickable(dlg, 'CASH') and not checkIfExist(dlg, 'VQP', control_type='Window'):
-        print('Amount tendered not sufficient tender cash exact amount')
-        clickTender(dlg, 'CASH')
+    # if checkIfExistVisibleClickable(dlg1, 'CASH') and not checkIfExist(dlg1, 'VQP', control_type='Window'):
+    #     print('Amount tendered not sufficient tender cash exact amount')
+    #     clickTender(dlg1, 'CASH')
     
     #kapag  maglalabas ng OK to print acc copy
-    while(checkIfExist(dlg, 'OK')):
-        clickBtn(dlg, 'OK')
+    while not checkIfExist(dlg, 'Server?', control_type="Edit"):
+        wait_time = 3
+        if checkIfExist(dlg, 'OK'):
+            clickBtn(dlg, 'OK')
+        time.sleep(wait_time)
 
 
 

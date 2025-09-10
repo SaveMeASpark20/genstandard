@@ -51,8 +51,13 @@ def clickTender(dlg, tender_btn, retries=3, delay=2, amount= 0 , control_type="B
                 if(amount):
                     inputText(dlg, amount, "Amount")
                     send_keys("{ENTER}")
+                    if(checkIfExist(dlg, 'Change Not Allowed For This Tender!')):
+                        clickBtn(dlg, 'OK')
+                        clickKeypad(dlg, "exact amount")
+                        return 2
                     return 1
                 
+                inputText(dlg, 0, "Amount")
                 clickKeypad(dlg, "exact amount")
                 return 3
             

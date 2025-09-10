@@ -50,13 +50,13 @@ def clickKeypad(dlg, keypadVal, retries=3, delay=2, control_type="Button"):
         print(f"Number '{keypadVal}' not found in keypad mapping.")
         return
 
-
     """Attempts to click a button multiple times with a delay in between."""
 
     attempt = 0
 
     while attempt < retries:
         try:
+            
             button = dlg.child_window(control_type=control_type,found_index=found_index)
             
             button.click_input()

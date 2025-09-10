@@ -20,3 +20,4 @@ def store_order(dlg, cashier_id, table):
     send_keys("{ENTER}")
 
     clickBtn(dlg, table)
+    

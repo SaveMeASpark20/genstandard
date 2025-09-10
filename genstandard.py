@@ -1,3 +1,35 @@
+# import sys
+# import os
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# from pywinauto import Application
+# from pywinauto.findwindows import ElementNotFoundError
+# from sequence.managerSignon import managerSignon
+# from sequence.openGo import openGo
+# from configuration.config import config
+# from transaction.dinein import bacchusDineIn
+# from sequence.cashierSignon import cashierSignon
+
+
+
+# def main(backend="uia"):
+#     """Connects to the FAST FOOD/FINE DINING application and clicks a button."""
+#     app=None
+#     dlg=None
+#     try:
+#         app = Application(backend=backend).connect(title_re=".*" +  "W I N V Q P" + ".*")
+#         dlg = app.window(title_re=".*" + "W I N V Q P" + ".*")
+#     except ElementNotFoundError:
+#         dlg = openGo()
+#         managerSignon(dlg)
+
+#     # cashierSignon(dlg)
+#     bacchusDineIn(dlg)
+    
+
+
+# if __name__ == "__main__":
+#     main()
+
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -7,25 +39,56 @@ from sequence.managerSignon import managerSignon
 from sequence.openGo import openGo
 from configuration.config import config
 from transaction.dinein import bacchusDineIn
+from transaction.dinein import bacchusDineInOTK
 from sequence.cashierSignon import cashierSignon
+from pywinauto.findwindows import find_elements
+from function.clickButton import clickBtn
+from handles.open_reg import open_reg
 
 
 
 def main(backend="uia"):
-    """Connects to the FAST FOOD/FINE DINING application and clicks a button."""
-    app=None
-    dlg=None
-    try:
-        app = Application(backend=backend).connect(title_re=".*" +  "W I N V Q P" + ".*")
-        dlg = app.window(title_re=".*" + "W I N V Q P" + ".*")
-    except ElementNotFoundError:
-        dlg = openGo()
-        managerSignon(dlg)
+    pos_no = config.POS
+    otk_no = config.OTK
 
-    # cashierSignon(dlg)
-    bacchusDineIn(dlg)
-    
+    dlg1, dlg2 = None, None
 
+    # Step 1: Scan open windows
+    windows = find_elements(title_re=".*W I N V Q P.*", control_type="Window", backend=backend)
+
+    for elem in windows:
+        app = Application(backend=backend).connect(handle=elem.handle)
+        dlg = app.window(handle=elem.handle)
+
+        if dlg.child_window(title=pos_no, control_type="Text").exists():
+            dlg1 = dlg
+            print("✅ Identified App1 (POS)")
+
+        elif dlg.child_window(title=otk_no, control_type="Text").exists():
+            dlg2 = dlg
+            print("✅ Identified App2 (OTK)")
+
+    # Step 2: Open main POS window if not found
+    if dlg1 is None:
+        print("⚠️ POS window not found, launching...")
+        dlg1 = openGo()
+        dlg1.set_focus()
+        managerSignon(dlg1)
+        cashierSignon(dlg1)
+    bacchusDineIn(dlg1)
+
+
+    if dlg2 is None:
+        print("ℹ️ OTK window not found, launching...")
+        dlg2 = openGo(is_OTK=True)
+        dlg2.set_focus()
+        managerSignon(dlg2)
+        open_reg(dlg2)
+        # cashierSignon(dlg2)
+
+    bacchusDineInOTK(dlg1, dlg2)
 
 if __name__ == "__main__":
     main()
+
+    
