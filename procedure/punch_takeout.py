@@ -24,9 +24,11 @@ from handles.split_bill import split_bill
 from handles.re_route import re_route
 from handles.return_to_product import return_to_product
 from handles.cancel_all import cancel_all
+from sequence.backMgrMenu import clickBckMgrMenu
+from sequence.managerSignon import managerSignon
 import time
 
-def punch(dlg: any,
+def punch_takeout(dlg: any,
     prod: List[str],
     prod_parent : List[str],
     counts: List[int],
@@ -67,11 +69,12 @@ def punch(dlg: any,
     open_memo_prod : Optional[List[str]] = None
 ):  
     
-    dine_in = config.dine_in
+    takeout = config.take_out
     cashier = config.cashier_cred
     manager = config.manager_cred
+    bachus_mainmenu_btn = config.bacchus_mainmenu_btn
 
-    cashier_sign_setup_table(dlg, cashier.cashier_id, dine_in.table, pax)
+    cashier_sign_setup_table(dlg, cashier.cashier_id, takeout.table, pax)
 
     if prod_addons is None:
         prod_addons = [None] * len(prod)
@@ -100,8 +103,17 @@ def punch(dlg: any,
 
     clickKeypad(dlg, 'check') #after punching check to go to tender section
     if not isFinalPayment :
-        store_order(dlg, cashier.cashier_id, dine_in.table)
-    
+        store_order(dlg, cashier.cashier_id, takeout.table)
+
+    if dito :
+        time.sleep(2)
+        if (checkIfExist(dlg, "VQP", control_type="Window")):
+            print('Transaction Type (DINE IN) Does Not Match! is exist')
+            clickBtn(dlg, 'OK')
+            clickBckMgrMenu(dlg, bachus_mainmenu_btn)
+            clickBtn(dlg, 'DINE IN')
+            cashier_sign_setup_table(dlg, cashier.cashier_id, takeout.table)
+
     if transfers:
         transfer(dlg, transfers, 'Text')
 
@@ -118,7 +130,7 @@ def punch(dlg: any,
         change_pax(dlg, changePax)
     
     if is_split_table:
-       split_table(dlg, mark_prods, table= dine_in.table, cashier_id=cashier.cashier_id, isPos=True)
+       split_table(dlg, mark_prods, table= takeout.table, cashier_id=cashier.cashier_id, isPos=True)
 
     if isCancelAll:
         time.sleep(2)
@@ -137,11 +149,11 @@ def punch(dlg: any,
             clickBtn(dlg, 'PRINT\r\nBILL')
             inputText(dlg, cashier.cashier_id, "Server?")
             send_keys("{ENTER}")
-            clickBtn(dlg, dine_in.table)
+            clickBtn(dlg, takeout.table)
             clickKeypad(dlg, 'check')
 
         if tender_disc :
-            discount(dlg,manager.manager_id, manager.manager_pass, tender_disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style, 20, dc_pax)
+            discount(dlg, manager.manager_id, manager.manager_pass, tender_disc, takeout.customer_id, takeout.customer_name, takeout.address, takeout.tin, takeout.bus_style, 20, dc_pax)
 
         if isReturn:
             return_to_product(dlg)
@@ -158,7 +170,7 @@ def punch(dlg: any,
             cust_info(dlg)
 
         if(disc):
-            discount(dlg,manager.manager_id, manager.manager_pass, disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style, 20, dc_pax)
+            discount(dlg,manager.manager_id, manager.manager_pass, disc, takeout.customer_id, takeout.customer_name, takeout.address, takeout.tin, takeout.bus_style, 20, dc_pax)
 
         if isFinalPaymentReturn: # return to cancel out the discount go back to product menu
             return_to_product(dlg, isFinalPaymentReturn=True)
@@ -182,6 +194,10 @@ def punch(dlg: any,
             if checkIfExist(dlg, 'OK'):
                 clickBtn(dlg, 'OK')
             time.sleep(wait_time)
-
-
+        #this is for di/to function to go back to TAKE OUT transaction
+        if dito:
+            inputText(dlg, cashier.cashier_id, 'Server?')
+            send_keys("{ENTER}")
+            clickBckMgrMenu(dlg, bachus_mainmenu_btn)
+            clickBtn(dlg, 'TAKE OUT')
     

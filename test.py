@@ -10,10 +10,12 @@ from transaction.dinein import bacchusDineIn
 from sequence.cashierSignon import cashierSignon
 from pywinauto.findwindows import find_elements
 from function.clickButton import clickKeypad
+from function.clickButton import clickNonBtn
+from function.clickButton import clickBtn
 from handles.tender_amount import tender_amount
 from handles.cashier_sign_setup_table import cashier_sign_setup_table
 from handles.open_reg import open_reg
-
+from function.util import checkIfExist
 
 
 def main(backend="uia"):
@@ -90,10 +92,28 @@ def main(backend="uia"):
     # clickBtn(dlg2, 'DINE IN')
 
     # cashier_sign_setup_table(dlg2, 22, 'TABLE 1')
-
-    dlg.print_control_identifiers()
-    open_reg(dlg)
+    # product=['HALO-HALO']
+    # isFinalPaymentReturn= True
+    # clickBtn(dlg2, 'RETURN')
+    # prod = product[0].replace("\r\n", " ")
+    # print(prod)
+    # clickNonBtn(dlg2, prod, control_type='Text')
+    # clickKeypad(dlg2, 'check')
+    # if isFinalPaymentReturn:
+    #     clickBtn(dlg2, 'FINAL\r\nPAYMENT')
+    # open_reg(dlg)
     # tender_amount(dlg1,amounts=None, tenders=['CASH'])
+    # product = ['HALO-HALO']
+    # prod = product[0].replace("\r\n", " ")
+    dlg1.print_control_identifiers()
+    # if(checkIfExist(dlg1, "VQP", control_type="Window")):
+    #     clickBtn(dlg1, 'OK')
+    # print(prod)
+    # clickNonBtn(dlg2, product, control_type='Text')
+    # dlg2.print_control_identifiers()
+    # Click button index 3 (for example)
+    
+
 
 if __name__ == "__main__":
     main()

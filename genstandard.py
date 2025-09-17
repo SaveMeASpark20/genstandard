@@ -1,35 +1,3 @@
-# import sys
-# import os
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-# from pywinauto import Application
-# from pywinauto.findwindows import ElementNotFoundError
-# from sequence.managerSignon import managerSignon
-# from sequence.openGo import openGo
-# from configuration.config import config
-# from transaction.dinein import bacchusDineIn
-# from sequence.cashierSignon import cashierSignon
-
-
-
-# def main(backend="uia"):
-#     """Connects to the FAST FOOD/FINE DINING application and clicks a button."""
-#     app=None
-#     dlg=None
-#     try:
-#         app = Application(backend=backend).connect(title_re=".*" +  "W I N V Q P" + ".*")
-#         dlg = app.window(title_re=".*" + "W I N V Q P" + ".*")
-#     except ElementNotFoundError:
-#         dlg = openGo()
-#         managerSignon(dlg)
-
-#     # cashierSignon(dlg)
-#     bacchusDineIn(dlg)
-    
-
-
-# if __name__ == "__main__":
-#     main()
-
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -40,10 +8,13 @@ from sequence.openGo import openGo
 from configuration.config import config
 from transaction.dinein import bacchusDineIn
 from transaction.dinein import bacchusDineInOTK
+from transaction.takeout import bacchusTakeOut
+from transaction.takeout import bacchusTakeOutOTK
 from sequence.cashierSignon import cashierSignon
 from pywinauto.findwindows import find_elements
 from function.clickButton import clickBtn
 from handles.open_reg import open_reg
+import time
 
 
 
@@ -75,7 +46,6 @@ def main(backend="uia"):
         dlg1.set_focus()
         managerSignon(dlg1)
         cashierSignon(dlg1)
-    bacchusDineIn(dlg1)
 
 
     if dlg2 is None:
@@ -86,7 +56,12 @@ def main(backend="uia"):
         open_reg(dlg2)
         # cashierSignon(dlg2)
 
+    time.sleep(5)
+    bacchusDineIn(dlg1)
     bacchusDineInOTK(dlg1, dlg2)
+
+    bacchusTakeOut(dlg1)
+    bacchusTakeOutOTK(dlg1, dlg2)
 
 if __name__ == "__main__":
     main()

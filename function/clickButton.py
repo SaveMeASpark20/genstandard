@@ -2,6 +2,7 @@ from pywinauto import Application
 import time
 from configuration.config import config
 from pywinauto.keyboard import send_keys
+import re
 
 def clickBtn(dlg, button_name, retries=3, delay=2, control_type="Button", secondsToSleep=0):
     """Attempts to click a button multiple times with a delay in between."""
@@ -12,6 +13,25 @@ def clickBtn(dlg, button_name, retries=3, delay=2, control_type="Button", second
             if(secondsToSleep):
                 time.sleep(secondsToSleep)
             button.click()
+            print(f"Clicked '{button_name}' successfully.")
+ 
+            return  # Exit function after a successful click
+        except Exception as e:
+            print(f"Attempt {attempt + 1}: Failed to click '{button_name}' - {e}")
+            time.sleep(delay)
+            attempt += 1
+
+    print(f"Failed to click '{button_name}' after {retries} attempts.")
+
+def clickBtnInput(dlg, button_name, retries=3, delay=2, control_type="Button", secondsToSleep=0):
+    """Attempts to click a button multiple times with a delay in between."""
+    attempt = 0
+    while attempt < retries:
+        try:
+            button = dlg.child_window(title=button_name, control_type=control_type)
+            if(secondsToSleep):
+                time.sleep(secondsToSleep)
+            button.click_input()
             print(f"Clicked '{button_name}' successfully.")
  
             return  # Exit function after a successful click
@@ -106,7 +126,8 @@ def clickNonBtn(dlg, button_name, retries=3, delay=2, control_type="Button", sec
     attempt = 0
     while attempt < retries:
         try:
-            button = dlg.child_window(title=button_name, control_type=control_type)
+            pattern = rf"\s*\d*\s*{re.escape(button_name)}"
+            button = dlg.child_window(title_re=pattern, control_type=control_type)
             if(secondsToSleep):
                 time.sleep(secondsToSleep)
             button.click_input()

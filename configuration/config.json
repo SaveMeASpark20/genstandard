@@ -13,6 +13,7 @@
       "cashier_pass": "QWERQWER2"  
     },
     "cashier_btn": "CASHIER\r\nSIGNON",
+    "bacchus_mainmenu_btn": "MAIN MENU",
     "credit_card": {
       "_comment": "make sure this appcode is 6",
       "appCode" : "123456" 
@@ -38,6 +39,12 @@
     "dine_in" : {
       "comment" : [
         {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"]
+        },
+                {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
           "counts": [1],
@@ -100,7 +107,8 @@
           "prod_parent": ["QA TEST\r\nPRODS"],
           "counts": [5],
           "tenders": ["CASH"],
-          "disc": "SENIOR DISC"
+          "disc": "SENIOR DISC",
+          "pax": 5
         },
         {
           "prod": ["HALO-HALO"],
@@ -133,7 +141,7 @@
           "prod": ["CRMY\r\nCARBONARA"],
           "prod_parent": ["QA TEST\r\nPRODS"],
           "qty_prod_addons" : [1],
-          "prod_addons" : ["LECHE\r\nPLAN"],
+          "prod_addons" : ["SKIP"],
           "counts": [1],
           "tenders": ["CASH"],
           "disc": "PWD DISC"
@@ -145,7 +153,8 @@
           "prod_addons" : ["LECHE\r\nPLAN"],
           "counts": [5],
           "tenders": ["CASH"],
-          "disc": "PWD DISC"
+          "disc": "PWD DISC",
+          "pax": 5
         },
         {
           "prod": ["HALO-HALO"],
@@ -165,7 +174,15 @@
           "tenders": ["CASH"],
           "disc": "SOLO PARENT"
         },
-         {
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [5],
+          "tenders": ["CASH"],
+          "disc": "SENIOR DISC",
+          "isReturn": true
+        },
+        {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
           "counts": [1],
@@ -202,12 +219,26 @@
           "spec_ins" : ["XTRA\r\nCHEESE", "XTRA CRB\r\nSAUCE"]
         },
         {
+          "prod": ["MEATY\r\nSPAG "],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "qty_prod_addons":[1],
+          "prod_addons":["SKIP"],
+          "tenders": ["CASH"],
+          "qty_spec_ins" : [1, 1, 1, 1],
+          "parent_spec_ins" : ["MEATY\r\nSPAG"],
+          "spec_ins" : ["XTRA\r\nCHEESE", "XTRA SPAG\r\nSAUCE", "NO HOTDOG", "LESS MEAT"]
+        },
+        {
           "prod": ["MEATY\r\nSPAG MEAL"],
           "prod_parent": ["QA TEST\r\nPRODS"],
           "counts": [1],
           "tenders": ["CASH"],
           "qty_meal_components" : [1],
-          "meal_components" : ["COKE IN\r\nCAN"]
+          "meal_components" : ["COKE IN\r\nCAN"],
+          "qty_spec_ins" : [1, 1, 1, 1],
+          "parent_spec_ins" : ["MEATY SPAG MC"],
+          "spec_ins" : ["XTRA\r\nCHEESE", "LESS MEAT"]
         },
         {
           "prod": ["SEAFOOD\r\nBUNDLE"],
@@ -243,6 +274,7 @@
           "prod": ["CRMY\r\nCARBONARA"],
           "prod_parent": ["QA TEST\r\nPRODS"],
           "prod_addons" : ["SKIP"],
+          "qty_prod_addons" : [1],
           "counts": [1],
           "tenders": ["CREDIT CARD"]
         },
@@ -290,7 +322,7 @@
           "prod_addons" : ["", "LECHE\r\nPLAN"],
           "counts": [1, 1],
           "tenders": ["CASH"],
-          "cancel_prod": ["HALO-HALO"]
+          "isCancelAll": true
         },
         { 
           "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
@@ -340,13 +372,11 @@
           "spec_ins" : ["SERVE NOW"]
         },
         {
-          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA" ],
-          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
-          "prod_addons" : ["","LECHE\r\nPLAN"],
-          "qty_prod_addons" : [0,1],
-          "counts": [1,1],
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
           "tenders": ["CASH"],
-          "transfers": ["CRMY CRBONARA"]
+          "is_print_bill": true
         },
         {
           "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
@@ -355,54 +385,29 @@
           "prod_addons" : ["", "LECHE\r\nPLAN"],
           "counts": [1, 1],
           "tenders": ["CASH"],
-          "cancel_prod": ["HALO-HALO"]
-        },
-        { 
-          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
-          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
-          "qty_prod_addons" : [0,1],
-          "prod_addons" : ["", "LECHE\r\nPLAN"],
-          "counts": [1, 1],
-          "tenders": ["CASH"],
-          "amounts": [10],
-          "mark_prods": ["HALO-HALO"],
-          "moveTo": "TABLE 2",
-          "paxMoveTo": 1
+          "pax": 2,
+          "split_bill_pax": 2
         },
         {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
           "counts": [1],
           "tenders": ["CASH"],
-          "changePax": 2
+          "tender_disc": "EMPLOYEE DISC"
         },
-        {
-          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
-          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
-          "qty_prod_addons" : [0,1],
-          "prod_addons" : ["", "LECHE\r\nPLAN"],
-          "counts": [1, 1],
-          "tenders": ["CASH"],
-          "amounts": [10],
-          "mark_prods": ["HALO-HALO"],
-          "is_split_table": true
+          {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["ON ACCOUNT"],
+          "disc": "EMPLOYEE DISC"
         },
         {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
           "counts": [1],
-          "tenders": ["CASH"],
-          "open_memo": ["MEDIUM RARE"],
-          "open_memo_prod": ["HALO-HALO"]
-        },
-        {
-          "prod": ["HALO-HALO"],
-          "prod_parent": ["QA TEST\r\nPRODS"],
-          "counts": [1],
-          "tenders": ["CASH"],
-          "qty_spec_ins" : [1],
-          "parent_spec_ins" : ["HALO-HALO"],
-          "spec_ins" : ["SERVE NOW"]
+          "tenders": ["CHECKS"],
+          "disc": "PROMO AMOUNT"
         }
       ],
       "prod_parent1" : "QA TEST\r\nPRODS",
@@ -417,7 +422,6 @@
       "bus_style" : "12313131",
       "appcode": "123456",
       "punching_sequence" : [
-        
       ]
     },
     "dine_in_OTK": {
@@ -432,7 +436,7 @@
       "tin" : "1231312",
       "bus_style" : "12313131",
       "appcode": "123456",
-      "punching_sequence" :[
+      "comment": [
         {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
@@ -476,9 +480,10 @@
           "prod_addons" : ["LECHE\r\nPLAN"],
           "qty_prod_addons" : [1],
           "tenders": ["CASH"],
-          "tender_disc": "EMPLOYEE DISC",
+          "tender_disc": "PROMO AMOUNT",
           "is_print_bill": true
         },
+        
         {
           "prod": ["CRMY\r\nCARBONARA"],
           "prod_parent": ["QA TEST\r\nPRODS"],
@@ -519,6 +524,636 @@
           "tender_disc": "MEDAL OF VALOR",
           "is_print_bill": true
         },
+                {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [0,1],
+          "prod_addons" : ["", "LECHE\r\nPLAN"],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "pax": 2,
+          "split_bill_pax": 2,
+          "is_print_bill": true
+        },
+                {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "is_print_bill": true,
+          "dito": [1]
+        },
+                {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA" ],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "prod_addons" : ["","LECHE\r\nPLAN"],
+          "qty_prod_addons" : [0,1],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "transfers": ["CRMY CRBONARA"],
+          "is_print_bill": true
+        },
+                {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [0,1],
+          "prod_addons" : ["", "LECHE\r\nPLAN"],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "isCancelAll": true
+        },
+                        { 
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [0,1],
+          "prod_addons" : ["", "LECHE\r\nPLAN"],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "amounts": [10],
+          "mark_prods": ["HALO-HALO"],
+          "moveTo": "TABLE 2",
+          "paxMoveTo": 1,
+          "is_print_bill": true
+        },
+                {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "changePax": 2,
+          "is_print_bill": true
+        },
+        
+        {
+          "prod": ["CRMY\r\nCARBONARA", "HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "counts": [1, 1],
+          "prod_addons" : ["LECHE\r\nPLAN", ""],
+          "qty_prod_addons" : [1, 0],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "is_split_table": true,
+          "mark_prods": ["HALO-HALO"]
+        },
+
+        {
+          "prod": ["CRMY\r\nCARBONARA", "HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "counts": [1, 1],
+          "prod_addons" : ["LECHE\r\nPLAN", ""],
+          "qty_prod_addons" : [1, 0],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "is_split_table": true,
+          "mark_prods": ["HALO-HALO"]
+        },
+                {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [5],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "isReturn": true
+        }
+      ],
+      "punching_sequence" :[
+        
+      ]
+    },
+    "take_out": {
+      "table" : "TABLE 1",
+      "customer_name" : "CHRISTIAN LEGUIZ",
+      "customer_id" : "123131313",
+      "address" : "758 Delpan",
+      "tin" : "1231312",
+      "bus_style" : "12313131",
+      "appcode": "123456",
+      "comment" : [
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"]
+        },
+        {
+          "prod": ["FAMILY\r\nBUNDLE"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "qty_meal_components" : [[1, 1, 1]],
+          "meal_components" : [["SG SALMON\r\nBELLY", "CHOPSEUY\r\nRICE", "SPARERIBS"]],
+          "prod_addons" : [[ "PLAIN\r\nRICE", "CHECK", "CHECK", "BUKO\r\nPANDAN", "CHECK"]],
+          "qty_prod_addons": [[1, 1, 1, 1, 1]]
+        },
+                {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [0,1],
+          "prod_addons" : ["", "LECHE\r\nPLAN"],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "cancel_prod": ["HALO-HALO"]
+        },
+
+                {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "additional_prod": ["CRMY\r\nCARBONARA"],
+          "additional_prod_parent" : ["QA TEST\r\nPRODS"],
+          "additional_addons": ["LECHE\r\nPLAN"],
+          "additional_count" : [1]
+        },
+                {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["GIFT CERT"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "SENIOR DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "EMPLOYEE DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "isFinalPayment": true
+        },
+
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "additional_prod": ["CRMY\r\nCARBONARA"],
+          "additional_prod_parent" : ["QA TEST\r\nPRODS"],
+          "additional_addons": ["LECHE\r\nPLAN"],
+          "additional_count" : [1]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["GIFT CERT"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["ON ACCOUNT"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "EMPLOYEE DISC"
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "SENIOR DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [5],
+          "tenders": ["CASH"],
+          "disc": "SENIOR DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [5],
+          "tenders": ["CASH"],
+          "disc": "SENIOR DISC",
+          "pax": 5,
+          "dc_pax": 3
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["SKIP"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "NACD"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "MEDAL OF VALOR"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "PWD DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [5],
+          "tenders": ["CASH"],
+          "disc": "PWD DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "PWD DISC",
+          "dc_pax": 3,
+          "pax": 5
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "SOLO PARENT"
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "prod_addons" : ["SKIP"],
+          "qty_prod_addons": [1],
+          "counts": [1],
+          "tenders": ["CREDIT CARD"]
+        },
+                {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CHECKS"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "isZeroRated": true
+        },
+                {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "isInputCustInfo": true
+        }
+      ],
+      "punching_sequence" : [
+                {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["GIFT CERT"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "SENIOR DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "EMPLOYEE DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "isFinalPayment": true
+        },
+
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "additional_prod": ["CRMY\r\nCARBONARA"],
+          "additional_prod_parent" : ["QA TEST\r\nPRODS"],
+          "additional_addons": ["LECHE\r\nPLAN"],
+          "additional_count" : [1]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["GIFT CERT"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["ON ACCOUNT"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "EMPLOYEE DISC"
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "SENIOR DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [5],
+          "tenders": ["CASH"],
+          "disc": "SENIOR DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [5],
+          "tenders": ["CASH"],
+          "disc": "SENIOR DISC",
+          "pax": 5,
+          "dc_pax": 3
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["SKIP"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "NACD"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "MEDAL OF VALOR"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "PWD DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [5],
+          "tenders": ["CASH"],
+          "disc": "PWD DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "PWD DISC",
+          "dc_pax": 3,
+          "pax": 5
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "SOLO PARENT"
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "prod_addons" : ["SKIP"],
+          "qty_prod_addons": [1],
+          "counts": [1],
+          "tenders": ["CREDIT CARD"]
+        },
+                {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CHECKS"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "isZeroRated": true
+        },
+                {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "isInputCustInfo": true
+        }
+      ]
+    },
+    "take_out_OTK": {
+      "prod_parent1" : "QA TEST\r\nPRODS",
+      "product" : "HALO-HALO",
+      "product2" : "GOLDEN\r\nPORKCHOP",
+      "product3" : "STEAMED\r\nCHICKEN",
+      "table" : "TABLE 1",
+      "customer_name" : "CHRISTIAN LEGUIZ",
+      "customer_id" : "123131313",
+      "address" : "758 Delpan",
+      "tin" : "1231312",
+      "bus_style" : "12313131",
+      "appcode": "123456",
+      "comment": [
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "is_print_bill": true
+        },
+        {
+          "prod": ["FAMILY\r\nBUNDLE"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "qty_meal_components" : [[1, 1, 1]],
+          "meal_components" : [["SG SALMON\r\nBELLY", "CHOPSEUY\r\nRICE", "SPARERIBS"]],
+          "prod_addons" : [[ "PLAIN\r\nRICE", "CHECK", "CHECK", "BUKO\r\nPANDAN", "CHECK"]],
+          "qty_prod_addons": [[1, 1, 1, 1, 1]],
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "tender_disc": "SENIOR DISC",
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "tender_disc": "EMPLOYEE DISC",
+          "is_print_bill": true
+        },
+        
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "tender_disc": "PROMO AMOUNT",
+          "is_print_bill": true
+        },
+                {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "tenders": ["CASH"],
+          "tender_disc": "SOLO PARENT",
+          "is_print_bill": true
+        },
+        
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "tenders": ["CASH"],
+          "tender_disc": "PWD DISC",
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "tender_disc": "NACD",
+          "is_print_bill": true
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [5],
+          "tenders": ["CASH"],
+          "tender_disc": "NACD",
+          "is_print_bill": true,
+          "isReturn": true
+        },
+        {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [0,1],
+          "prod_addons" : ["", "LECHE\r\nPLAN"],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "pax": 2,
+          "split_bill_pax": 2
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "is_print_bill": true,
+          "dito": [1]
+        },
+        {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [0,1],
+          "prod_addons" : ["", "LECHE\r\nPLAN"],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "cancel_prod": ["HALO-HALO"],
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "additional_prod": ["CRMY\r\nCARBONARA"],
+          "additional_prod_parent" : ["QA TEST\r\nPRODS"],
+          "additional_addons": ["LECHE\r\nPLAN"],
+          "additional_count" : [1],
+          "is_print_bill" : true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["GIFT CERT"],
+          "is_print_bill": true
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "tenders": ["CASH"],
+          "tender_disc": "EMPLOYEE DISC",
+          "is_print_bill": true
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true
+        },
         {
           "prod": ["CRMY\r\nCARBONARA", "HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
@@ -528,7 +1163,8 @@
           "tenders": ["CASH"],
           "tender_disc": "MEDAL OF VALOR",
           "is_print_bill": true,
-          "is_split_table": true
+          "is_split_table": true,
+          "mark_prods": ["HALO-HALO"]
         },
         {
           "prod": ["HALO-HALO"],
@@ -538,6 +1174,336 @@
           "tender_disc": "MEDAL OF VALOR",
           "is_print_bill": true,
           "dito": [1]
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA", "HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "counts": [1, 1],
+          "prod_addons" : ["LECHE\r\nPLAN", ""],
+          "qty_prod_addons" : [1, 0],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "is_split_table": true,
+          "mark_prods": ["HALO-HALO"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "dito": [1]
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA", "HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "counts": [1, 1],
+          "prod_addons" : ["LECHE\r\nPLAN", ""],
+          "qty_prod_addons" : [1, 0],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "is_split_table": true,
+          "mark_prods": ["HALO-HALO"]
+        },
+        {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA" ],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "prod_addons" : ["","LECHE\r\nPLAN"],
+          "qty_prod_addons" : [0,1],
+          "counts": [1,1],
+          "tenders": ["CASH"],
+          "isCancelAll": true
+        },
+        { 
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [0,1],
+          "prod_addons" : ["", "LECHE\r\nPLAN"],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "amounts": [10],
+          "mark_prods": ["HALO-HALO"],
+          "moveTo": "TABLE 2",
+          "paxMoveTo": 1,
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "changePax": 2,
+          "is_print_bill": true
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA", "HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "counts": [1, 1],
+          "prod_addons" : ["LECHE\r\nPLAN", ""],
+          "qty_prod_addons" : [1, 0],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "is_split_table": true,
+          "mark_prods": ["HALO-HALO"]
+        }
+      ],
+      "punching_sequence" :[
+                {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "is_print_bill": true
+        },
+        {
+          "prod": ["FAMILY\r\nBUNDLE"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "qty_meal_components" : [[1, 1, 1]],
+          "meal_components" : [["SG SALMON\r\nBELLY", "CHOPSEUY\r\nRICE", "SPARERIBS"]],
+          "prod_addons" : [[ "PLAIN\r\nRICE", "CHECK", "CHECK", "BUKO\r\nPANDAN", "CHECK"]],
+          "qty_prod_addons": [[1, 1, 1, 1, 1]],
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "tender_disc": "SENIOR DISC",
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "tender_disc": "EMPLOYEE DISC",
+          "is_print_bill": true
+        },
+        
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "tender_disc": "PROMO AMOUNT",
+          "is_print_bill": true
+        },
+                {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "tenders": ["CASH"],
+          "tender_disc": "SOLO PARENT",
+          "is_print_bill": true
+        },
+        
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "tenders": ["CASH"],
+          "tender_disc": "PWD DISC",
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "tender_disc": "NACD",
+          "is_print_bill": true
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [5],
+          "tenders": ["CASH"],
+          "tender_disc": "NACD",
+          "is_print_bill": true,
+          "isReturn": true
+        },
+        {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [0,1],
+          "prod_addons" : ["", "LECHE\r\nPLAN"],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "pax": 2,
+          "split_bill_pax": 2
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "is_print_bill": true,
+          "dito": [1]
+        },
+        {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [0,1],
+          "prod_addons" : ["", "LECHE\r\nPLAN"],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "cancel_prod": ["HALO-HALO"],
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "additional_prod": ["CRMY\r\nCARBONARA"],
+          "additional_prod_parent" : ["QA TEST\r\nPRODS"],
+          "additional_addons": ["LECHE\r\nPLAN"],
+          "additional_count" : [1],
+          "is_print_bill" : true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["GIFT CERT"],
+          "is_print_bill": true
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "tenders": ["CASH"],
+          "tender_disc": "EMPLOYEE DISC",
+          "is_print_bill": true
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA", "HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "counts": [1, 1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1, 0],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "is_split_table": true,
+          "mark_prods": ["HALO-HALO"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "dito": [1]
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA", "HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "counts": [1, 1],
+          "prod_addons" : ["LECHE\r\nPLAN", ""],
+          "qty_prod_addons" : [1, 0],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "is_split_table": true,
+          "mark_prods": ["HALO-HALO"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "dito": [1]
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA", "HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "counts": [1, 1],
+          "prod_addons" : ["LECHE\r\nPLAN", ""],
+          "qty_prod_addons" : [1, 0],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "is_split_table": true,
+          "mark_prods": ["HALO-HALO"]
+        },
+        {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA" ],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "prod_addons" : ["","LECHE\r\nPLAN"],
+          "qty_prod_addons" : [0,1],
+          "counts": [1,1],
+          "tenders": ["CASH"],
+          "isCancelAll": true
+        },
+        { 
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [0,1],
+          "prod_addons" : ["", "LECHE\r\nPLAN"],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "amounts": [10],
+          "mark_prods": ["HALO-HALO"],
+          "moveTo": "TABLE 2",
+          "paxMoveTo": 1,
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "changePax": 2,
+          "is_print_bill": true
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA", "HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "counts": [1, 1],
+          "prod_addons" : ["LECHE\r\nPLAN", ""],
+          "qty_prod_addons" : [1, 0],
+          "tenders": ["CASH"],
+          "tender_disc": "MEDAL OF VALOR",
+          "is_print_bill": true,
+          "is_split_table": true,
+          "mark_prods": ["HALO-HALO"]
         }
       ]
     }

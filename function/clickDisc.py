@@ -1,5 +1,5 @@
 from function.clickButton import clickBtn
-from function.input import inputText
+from function.input import inputText_Re
 from configuration.config import config
 from function.util import checkIfExistWithRegex
 from pywinauto.keyboard import send_keys
@@ -21,30 +21,30 @@ def clickDiscount(dlg, disc_name, customer_id, customer_name, address, tin, bus_
         if key in disc_name.upper():  # Convert input to uppercase to allow case-insensitive matching
             clickBtn(dlg, button_name)
             if key == "PROMO AMOUNT":
-                inputText(dlg, promo_amount, 'Disc Amount:')
+                inputText_Re(dlg, promo_amount, 'Disc Amount:')
                 send_keys("{ENTER}")
                 return
             if key in ("SENIOR DISC", "SOLO PARENT", "PWD DISC", "NACD", "MEDAL OF VALOR"):
                 while(checkIfExistWithRegex(dlg, 'PAX')):
                     # di pa pwede sa food kasi may pax at senior pax etc dun
-                    inputText(dlg, dc_pax, "PAX")
+                    inputText_Re(dlg, dc_pax, "PAX")
                     send_keys("{ENTER}")
                 for i in range(dc_pax):
                     if(i==0):
-                        inputText(dlg, customer_id, "ID")
+                        inputText_Re(dlg, customer_id, "ID")
                         send_keys("{TAB}")
-                        inputText(dlg, customer_name, "Name")
+                        inputText_Re(dlg, customer_name, "Name")
                         send_keys("{TAB}")
-                        inputText(dlg, address, "Address")
+                        inputText_Re(dlg, address, "Address")
                         send_keys("{TAB}")
-                        inputText(dlg, tin, "TIN")
+                        inputText_Re(dlg, tin, "TIN")
                         send_keys("{TAB}")
-                        inputText(dlg, bus_style, "Bus Style")
+                        inputText_Re(dlg, bus_style, "Bus Style")
                         send_keys("{ENTER}")
                     else:
-                        inputText(dlg, customer_id, "ID")
+                        inputText_Re(dlg, customer_id, "ID")
                         send_keys("{TAB}")
-                        inputText(dlg, customer_name, "Name")
+                        inputText_Re(dlg, customer_name, "Name")
                         send_keys("{ENTER}")
                 return
             return

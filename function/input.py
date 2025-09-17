@@ -5,6 +5,30 @@ from pywinauto.keyboard import send_keys
 
 def inputText(dlg, text, name, max_retries=5, delay=0.5):
     attempt = 0
+
+    while attempt < max_retries:
+        try:
+            textbox = dlg.child_window(control_type="Edit", title=name)
+
+            # Make sure the control exists and is visible
+            if not textbox.exists(timeout=1):
+                raise Exception(f"{text} not found")
+            
+            textbox.set_focus()
+            send_keys(str(text), with_spaces=True)
+            print(f"✅ Successfully typed: '{text}' on attempt {attempt + 1}")
+            return True  # exit if success
+
+        except Exception as e:
+            print(f"⚠️ Attempt {attempt + 1} failed: {e}")
+            attempt += 1
+            time.sleep(delay)
+
+    print("❌ Failed to type text after retries.")
+    return False  # failed after retries
+
+def inputText_Re(dlg, text, name, max_retries=5, delay=0.5):
+    attempt = 0
     title_re = f".*{name}.*"
 
     while attempt < max_retries:

@@ -6,6 +6,7 @@ from function.util import checkIfExistVisibleClickable
 from function.util import checkIfExistEscapeSpecChars
 from function.clickButton import clickNonBtn
 from tender.clickTender import clickTender
+from function.input import inputText_Re
 from function.input import inputText
 from handles.cashier_sign_setup_table import cashier_sign_setup_table
 from handles.initial_punch import initial_punch
@@ -28,10 +29,11 @@ from handles.re_route import re_route
 from handles.return_to_product import return_to_product
 from handles.first_table_final import first_table_final
 from handles.cancel_all import cancel_all
+from sequence.managerSignon import managerSignon
 
 import time
 
-def punch_OTK(dlg1: any, dlg2: any,
+def punch_takeout_OTK(dlg1: any, dlg2: any,
     prod: List[str],
     prod_parent : List[str],
     counts: List[int],
@@ -74,16 +76,17 @@ def punch_OTK(dlg1: any, dlg2: any,
     dlg = dlg1
     dlg2 = dlg2
     
-    dine_in = config.dine_in
-    dine_in_otk = config.dine_in_OTK
+    takeout = config.take_out
+    takeout_OTK = config.take_out_OTK
     cashier = config.cashier_cred
     manager = config.manager_cred
+    bachus_mainmenu_btn = config.bacchus_mainmenu_btn
 
-    if checkIfExist(dlg2, 'DINE IN'):
-        clickBtn(dlg2, 'DINE IN')
+    if checkIfExist(dlg2, 'TAKE OUT'):
+        clickBtn(dlg2, 'TAKE OUT')
 
 
-    cashier_sign_setup_table(dlg2, cashier.cashier_id, dine_in.table, pax)
+    cashier_sign_setup_table(dlg2, cashier.cashier_id, takeout_OTK.table, pax)
 
     if prod_addons is None:
         prod_addons = [None] * len(prod)
@@ -113,13 +116,23 @@ def punch_OTK(dlg1: any, dlg2: any,
     #     split_bill(dlg2, split_bill_pax, pax)
         
     clickKeypad(dlg2, 'check') #after punching check to go to tender section
-    if not isFinalPayment :
-        store_order(dlg2, cashier.cashier_id, dine_in_otk.table)
+    if not isFinalPayment:
+        store_order(dlg2, cashier.cashier_id, takeout_OTK.table)
 
         if isCancelAll:
             cancel_all(dlg2, 'CANCEL\r\nORDER')
 
     if not isCancelAll:
+        print("papasok ba sya dito kapag hinanap yung final payment")
+        time.sleep(2)
+        if dito :
+            if (checkIfExist(dlg2, "VQP", control_type="Window")):
+                print('Transaction Type (DINE IN) Does Not Match! is exist')
+                clickBtn(dlg2, 'OK')
+                clickBckMgrMenu(dlg2, bachus_mainmenu_btn)
+                clickBtn(dlg2, 'DINE IN')
+                cashier_sign_setup_table(dlg2, cashier.cashier_id, takeout.table)
+
         if transfers:
             transfer(dlg2, transfers, 'Text')
 
@@ -132,28 +145,27 @@ def punch_OTK(dlg1: any, dlg2: any,
         if moveTo and paxMoveTo and mark_prods:
             move_prod_other_table(dlg2, mark_prods, moveTo, pax, cashier.cashier_id)
             dlg.set_focus()
-            first_table_final(dlg, cashier_id=cashier.cashier_id, table=dine_in.table, amounts=amounts, tenders=tenders)
+            first_table_final(dlg, cashier_id=cashier.cashier_id, table=takeout.table, amounts=amounts, tenders=tenders)
             re_route(dlg)
 
             dlg2.set_focus()
             cashier_sign_setup_table(dlg2, cashier.cashier_id, table=moveTo)
-
         if changePax:
             change_pax(dlg2, changePax)
         
         if is_split_table:
-            split_table(dlg2, mark_prods, table=dine_in_otk.table, cashier_id=cashier.cashier_id)
+            split_table(dlg2, mark_prods, table=takeout_OTK.table, cashier_id=cashier.cashier_id)
             dlg.set_focus()
-            first_table_final(dlg, cashier_id=cashier.cashier_id, table=dine_in.table, amounts=amounts, tenders=tenders, is_split_table=is_split_table)
+            first_table_final(dlg, cashier_id=cashier.cashier_id, table=takeout.table, amounts=amounts, tenders=tenders, is_split_table=is_split_table)
             re_route(dlg)
 
             dlg2.set_focus()
-            cashier_sign_setup_table(dlg2, cashier.cashier_id, table=dine_in_otk.table)
+            cashier_sign_setup_table(dlg2, cashier.cashier_id, table= takeout_OTK.table)
 
         clickKeypad(dlg2, 'check') 
 
         if tender_disc :
-            discount(dlg2, manager.manager_id, manager.manager_pass, tender_disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style, 20, dc_pax)
+            discount(dlg2, manager.manager_id, manager.manager_pass, tender_disc, takeout.customer_id, takeout.customer_name, takeout.address, takeout.tin, takeout.bus_style, 20, dc_pax)
 
         if isReturn:
             return_to_product(dlg2)
@@ -167,12 +179,13 @@ def punch_OTK(dlg1: any, dlg2: any,
             
             clickBtn(dlg2, 'PRINT\r\nBILL')
 
-            inputText(dlg2, cashier.cashier_id, "Server?")
+            inputText_Re(dlg2, cashier.cashier_id, "Server?")
             send_keys("{ENTER}")
             if moveTo:
                 clickBtn(dlg2, moveTo)
             else:
-                clickBtn(dlg2, dine_in_otk.table)
+                clickBtn(dlg2, takeout_OTK.table)
+
             if checkIfExist(dlg2, "Bill Already Printed!", control_type='Text') or checkIfExist(dlg2, "VQP", control_type='Window'):
                 print(f"Bill Already Printed Click OK")
                 clickBtn(dlg2, 'OK')
@@ -180,15 +193,23 @@ def punch_OTK(dlg1: any, dlg2: any,
         clickBckMgrMenu(dlg2, 'MAIN MENU')
 
         dlg.set_focus()
+
+        if checkIfExist(dlg, 'TAKE OUT'):
+            clickBtn(dlg, 'TAKE OUT')
         if(checkIfExist(dlg, 'Invalid Code!', control_type='Text')):
             clickBtn(dlg, 'OK')
-        # if checkIfExist(dlg, 'DINE IN'):
-        #     clickBtn(dlg, 'DINE IN')
+        
+        if dito or transfers:
+            inputText(dlg, cashier.cashier_id, 'Server?')
+            send_keys("{ENTER}")
+            clickBckMgrMenu(dlg, bachus_mainmenu_btn)
+            clickBtn(dlg, 'DINE IN')
+        
         if moveTo:
             print('dito ba magmemess up?')
             cashier_sign_setup_table(dlg, cashier.cashier_id, table=moveTo)
         else:
-            cashier_sign_setup_table(dlg, cashier.cashier_id, table=dine_in.table)
+            cashier_sign_setup_table(dlg, cashier.cashier_id, table=takeout.table)
 
         if not isFinalPayment and not isCancelAll:
             clickKeypad(dlg, 'check')
@@ -206,7 +227,7 @@ def punch_OTK(dlg1: any, dlg2: any,
                 cust_info(dlg)
 
             if(disc):
-                discount(dlg,manager.manager_id, manager.manager_pass, disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style, 20, dc_pax)
+                discount(dlg,manager.manager_id, manager.manager_pass, disc, takeout.customer_id, takeout.customer_name, takeout.address, takeout.tin, takeout.bus_style, 20, dc_pax)
 
             if isFinalPaymentReturn: # return to cancel out the discount go back to product menu
                 return_to_product(dlg, isFinalPaymentReturn=True)
@@ -226,7 +247,13 @@ def punch_OTK(dlg1: any, dlg2: any,
                 if checkIfExist(dlg, 'OK'):
                     clickBtn(dlg, 'OK')
                 time.sleep(wait_time)
-
+            
+            #this is for di/to function to go back to TAKE OUT transaction
+            if dito or transfers:
+                inputText(dlg, cashier.cashier_id, 'Server?')
+                send_keys("{ENTER}")
+                clickBckMgrMenu(dlg, bachus_mainmenu_btn)
+                clickBtn(dlg, 'TAKE OUT')
 
 
 

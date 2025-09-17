@@ -1,7 +1,7 @@
 
 from function.clickButton import clickBtn
 from function.clickButton import clickKeypad
-from function.input import inputText
+from function.input import inputText_Re
 from function.util import checkIfExist
 from function.util import checkIfExistWithTitleRe
 from pywinauto.keyboard import send_keys
@@ -19,13 +19,13 @@ def cashierSignon(dlg) :
         elif(checkIfExistWithTitleRe(dlg, "Cashier", 'Text')):
             clickBtn(dlg, 'OK')
             return
-    inputText(dlg, cashier.cashier_id, "Cashier")
+    inputText_Re(dlg, cashier.cashier_id, "Cashier")
     send_keys("{TAB}")
-    inputText(dlg, cashier.cashier_pass, "Password")
+    inputText_Re(dlg, cashier.cashier_pass, "Password")
     send_keys("{ENTER}")
     if(isNewDate):
         time.sleep(5)
-        inputText(dlg, '20000')
+        inputText_Re(dlg, '20000')
         clickKeypad(dlg, 'check')
     clickKeypad(dlg, 'check')
     if(checkIfExist(dlg, 'OK')):

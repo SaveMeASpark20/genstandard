@@ -1,4 +1,4 @@
-from function.input import inputText
+from function.input import inputText_Re
 from function.clickButton import clickKeypad
 from configuration.config import config
 from function.util import checkIfExist
@@ -11,6 +11,6 @@ def managerSignon(dlg):
     while(checkIfExist(dlg, 'OPOS', control_type='Window')):
         clickBtn(dlg, 'OK')
     send_keys("{TAB}")
-    inputText(dlg, manager.manager_id, 'Manager')
-    inputText(dlg, manager.manager_pass, 'Password')
+    inputText_Re(dlg, manager.manager_id, 'Manager')
+    inputText_Re(dlg, manager.manager_pass, 'Password')
     send_keys("{ENTER}")

@@ -1,13 +1,13 @@
-from function.input import inputText
+from function.input import inputText_Re
 from configuration.config import config
 from pywinauto.keyboard import send_keys
 def clickCustInfo(dlg):
     dine_in = config.dine_in
-    inputText(dlg, dine_in.customer_name, "Cust Name")
+    inputText_Re(dlg, dine_in.customer_name, "Cust Name")
     send_keys("{TAB}")
-    inputText(dlg, dine_in.address, "Address")
+    inputText_Re(dlg, dine_in.address, "Address")
     send_keys("{TAB}")
-    inputText(dlg, dine_in.tin, "TIN")
+    inputText_Re(dlg, dine_in.tin, "TIN")
     send_keys("{TAB}")
-    inputText(dlg, dine_in.bus_style, "Bus Style")
+    inputText_Re(dlg, dine_in.bus_style, "Bus Style")
     send_keys("{ENTER}")  

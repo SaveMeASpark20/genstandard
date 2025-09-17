@@ -1,5 +1,5 @@
 from configuration.config import config
-from function.input import inputText
+from function.input import inputText_Re
 import time
 from pywinauto.keyboard import send_keys
 from function.clickButton import clickKeypad
@@ -33,10 +33,10 @@ def clickTender(dlg, tender_btn, retries=3, delay=2, amount= 0 , control_type="B
             button.click()
             print(f"Clicked '{btn}' successfully.")
             if(tender_btn =='CREDIT CARD'):
-                inputText(dlg, credit_card.appCode, "ApprCode")
+                inputText_Re(dlg, credit_card.appCode, "ApprCode")
                 send_keys("{ENTER}")
                 if(amount):
-                    inputText(dlg, amount, "Amount")
+                    inputText_Re(dlg, amount, "Amount")
                     send_keys("{ENTER}")
                     if(checkIfExist(dlg, 'Change Not Allowed For This Tender!')):
                         clickBtn(dlg, 'OK')
@@ -49,7 +49,7 @@ def clickTender(dlg, tender_btn, retries=3, delay=2, amount= 0 , control_type="B
             
             if(tender_btn == 'CASH'):
                 if(amount):
-                    inputText(dlg, amount, "Amount")
+                    inputText_Re(dlg, amount, "Amount")
                     send_keys("{ENTER}")
                     if(checkIfExist(dlg, 'Change Not Allowed For This Tender!')):
                         clickBtn(dlg, 'OK')
@@ -57,15 +57,15 @@ def clickTender(dlg, tender_btn, retries=3, delay=2, amount= 0 , control_type="B
                         return 2
                     return 1
                 
-                inputText(dlg, 0, "Amount")
+                inputText_Re(dlg, 0, "Amount")
                 clickKeypad(dlg, "exact amount")
                 return 3
             
             if(tender_btn == 'DEBIT CARD'):
-                inputText(dlg, debit_card.Invoice, "Invoice")
+                inputText_Re(dlg, debit_card.Invoice, "Invoice")
                 send_keys("{ENTER}")
                 if(amount):
-                    inputText(dlg, amount, "Amount")
+                    inputText_Re(dlg, amount, "Amount")
                     send_keys("{ENTER}")
                     if(checkIfExist(dlg, 'Change Not Allowed For This Tender!')):
                         clickBtn(dlg, 'OK')
@@ -77,10 +77,10 @@ def clickTender(dlg, tender_btn, retries=3, delay=2, amount= 0 , control_type="B
                 return 3 
             
             if(tender_btn == 'GIFT CERT'):
-                inputText(dlg, gift_cert.giftcert, "GIFT CERT")
+                inputText_Re(dlg, gift_cert.giftcert, "GIFT CERT")
                 send_keys("{ENTER}")
                 if(amount):
-                    inputText(dlg, amount, "Amount")
+                    inputText_Re(dlg, amount, "Amount")
                     send_keys("{ENTER}")
                     if(checkIfExist(dlg, 'Change Not Allowed For This Tender!')):
                         clickBtn(dlg, 'OK')
@@ -92,10 +92,10 @@ def clickTender(dlg, tender_btn, retries=3, delay=2, amount= 0 , control_type="B
                 return 3 
             
             if(tender_btn == 'ON ACCOUNT'):
-                inputText(dlg, on_account.chargeTo, "Charge To")
+                inputText_Re(dlg, on_account.chargeTo, "Charge To")
                 send_keys("{ENTER}")
                 if(amount):
-                    inputText(dlg, amount, "Amount")
+                    inputText_Re(dlg, amount, "Amount")
                     send_keys("{ENTER}")
                     if(checkIfExist(dlg, 'Change Not Allowed For This Tender!')):
                         clickBtn(dlg, 'OK')
@@ -107,18 +107,18 @@ def clickTender(dlg, tender_btn, retries=3, delay=2, amount= 0 , control_type="B
                 return 3 
             
             if(tender_btn == 'CHECKS'):
-                inputText(dlg, checks.check, "CHECKS")
+                inputText_Re(dlg, checks.check, "CHECKS")
                 send_keys("{ENTER}")
-                inputText(dlg, checks.bank, "Bank")
+                inputText_Re(dlg, checks.bank, "Bank")
                 send_keys("{ENTER}")
-                inputText(dlg, checks.acc_name, "Account Name")
+                inputText_Re(dlg, checks.acc_name, "Account Name")
                 send_keys("{ENTER}")
-                inputText(dlg, checks.acc_no, "Account No")
+                inputText_Re(dlg, checks.acc_no, "Account No")
                 send_keys("{ENTER}")
                 send_keys("{ENTER}")
 
                 if(amount):
-                    inputText(dlg, amount, "Amount")
+                    inputText_Re(dlg, amount, "Amount")
                     send_keys("{ENTER}")
                     if(checkIfExist(dlg, 'Change Not Allowed For This Tender!')):
                         clickBtn(dlg, 'OK')

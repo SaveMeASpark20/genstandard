@@ -1,12 +1,12 @@
 from function.clickButton import clickBtn
 from function.clickButton import clickKeypad
 from function.clickButton import clickNonBtn
-from function.input import inputText
+from function.input import inputText_Re
 from pywinauto.keyboard import send_keys
 
 def initial_punch(dlg, prod, counts, prod_parent,  prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito, open_memo, open_memo_prod ):
 
-    for index, (product, qty, parent,add_on, qpa, mc, qmc, si, psi, qsi, dt) in enumerate(zip(prod, counts, prod_parent, prod_addons, qty_prod_addons,  meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito )):
+    for index, (product, qty, parent,add_on, qpa, mc, qmc, dt) in enumerate(zip(prod, counts, prod_parent, prod_addons, qty_prod_addons,  meal_components, qty_meal_components, dito )):
         current_parent =  prod_parent[0]
         if qty and product and parent:
                 if dt == 1:
@@ -50,20 +50,25 @@ def initial_punch(dlg, prod, counts, prod_parent,  prod_addons, qty_prod_addons,
                                 else: 
                                     clickBtn(dlg, add)
 
-                    if psi and si:
-                        # clean_item = psi.replace("\r\n", " ")
-                        # clickNonBtn(dlg, clean_item, control_type='Text')
-                        clickBtn(dlg, "SPCL\r\nINSTRUCTN")
-                        for _ in range(qsi):
-                            clickBtn(dlg, si)
-                    
-                        clickKeypad(dlg, "check")
+    if parent_spec_ins and spec_ins and qty_spec_ins:
+        print(parent_spec_ins)
+        for psi in parent_spec_ins:
+            if psi:
+                clean_item = psi.replace("\r\n", " ")
+                clickNonBtn(dlg, clean_item, control_type='Text')
+                clickBtn(dlg, "SPCL\r\nINSTRUCTN")
+        for si, qsi in zip(spec_ins, qty_spec_ins):
+            if si and qsi:
+                for _ in range(qsi):
+                    clickBtn(dlg, si)
+        
+        clickKeypad(dlg, "check")
 
     if open_memo and open_memo_prod:
         for memo, prod in zip(open_memo ,open_memo_prod):
             clickNonBtn(dlg, prod, control_type='Text')
             clickBtn(dlg, 'OPEN MEMO')
-            inputText(dlg, memo, 'Spcl Inst')
+            inputText_Re(dlg, memo, 'Spcl Inst')
             send_keys("{ENTER}")
 
 

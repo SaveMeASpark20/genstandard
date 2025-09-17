@@ -14,5 +14,5 @@ def tender_amount(dlg, amounts, tenders):
                     return
     else :
         for tender in tenders:
-            print(f"ito ba yung na aano? {tender}")
+            print("amount is not provided, click exact amount")
             clickTender(dlg, tender)

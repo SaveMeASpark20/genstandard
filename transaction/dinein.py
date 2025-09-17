@@ -12,9 +12,11 @@ def bacchusDineIn(dlg, trantype='DINE IN'):
         punch(dlg, **vars(punch_data))
     
     
-def bacchusDineInOTK(dlg1, dlgOTK, trantype='DINE IN'):
+def bacchusDineInOTK(dlg2, dlgOTK, trantype='DINE IN'):
     
     # clickBtn(dlgOTK, trantype)
     sequence = config.dine_in_OTK.punching_sequence
+    if(len(sequence) > 0):
+        clickBtn(dlg2, trantype)
     for punch_data in sequence:
-        punch_OTK(dlg1, dlgOTK, **vars(punch_data))
+        punch_OTK(dlg2, dlgOTK, **vars(punch_data))

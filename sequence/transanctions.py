@@ -5,7 +5,7 @@ from function.clickButton import clickDeliveryBtn
 from function.clickButton import doubleClickDateArrow
 from function.util import checkIfExist
 from function.util import generate_random_number
-from function.input import inputText
+from function.input import inputText_Re
 from function.input import inputTextByIndex
 from function.clickButton import clickBlkRecallBtn
 from configuration.config import config
@@ -39,29 +39,29 @@ def delivery(dlg, transaction_type ="DELIVERY") :
     for disc in delivery.disc :
         print(disc)
         clickDeliveryBtn(dlg, "new") #new 
-        inputText(dlg, delivery.phone, "Phone")
+        inputText_Re(dlg, delivery.phone, "Phone")
         send_keys("{TAB}")
-        inputText(dlg, delivery.loc, "Loc/Ext")
+        inputText_Re(dlg, delivery.loc, "Loc/Ext")
         send_keys("{TAB}")
-        inputText(dlg, delivery.name, "Name")
+        inputText_Re(dlg, delivery.name, "Name")
         send_keys("{TAB}")
-        inputText(dlg, delivery.address, "Address")
+        inputText_Re(dlg, delivery.address, "Address")
         send_keys("{TAB}")
         inputTextByIndex(dlg, delivery.address2, 4)
         send_keys("{TAB}")
-        inputText(dlg, delivery.grid, "Grid/Area")
+        inputText_Re(dlg, delivery.grid, "Grid/Area")
         send_keys("{TAB}")
-        inputText(dlg, delivery.comment, "Comment")
+        inputText_Re(dlg, delivery.comment, "Comment")
         send_keys("{TAB}")
-        inputText(dlg, delivery.note, "Note")
+        inputText_Re(dlg, delivery.note, "Note")
         send_keys("{ENTER}")
         clickBtn(dlg, delivery.prod_group)
         clickBtn(dlg, delivery.product)
         clickKeypad(dlg, "check")
         clickBtn(dlg, "DISC")
-        inputText(dlg, delivery.manager_id, "Manager")
+        inputText_Re(dlg, delivery.manager_id, "Manager")
         send_keys("{TAB}")
-        inputText(dlg, delivery.manager_pass, "Password")
+        inputText_Re(dlg, delivery.manager_pass, "Password")
         send_keys("{ENTER}")
         clickDiscount(dlg, disc, delivery.customer_id, delivery.customer_name, delivery.address, delivery.tin, delivery.bus_style)
         clickBtn(dlg, "CASH")
@@ -70,7 +70,7 @@ def delivery(dlg, transaction_type ="DELIVERY") :
             clickBtn(dlg, 'RE-ROUTE')
             clickBtn(dlg, 'P O S')
         clickDeliveryBtn(dlg, "driver")
-        inputText(dlg, delivery.rider_id, "Rider")
+        inputText_Re(dlg, delivery.rider_id, "Rider")
         send_keys("{ENTER}")
         clickDeliveryBtn(dlg, "check")
         now = datetime.now()
@@ -83,7 +83,7 @@ def delivery(dlg, transaction_type ="DELIVERY") :
         print(f"New Time: {updated_time}")
         inputTime =updated_time.replace(":", "")
         print(f"Update new Time: {inputTime}")
-        inputText(dlg, inputTime, 'RcvTime')
+        inputText_Re(dlg, inputTime, 'RcvTime')
         send_keys("{ENTER}")
         send_keys("{ENTER}")
         clickBtn(dlg, "CASH")
@@ -101,9 +101,9 @@ def misc(dlg, transaction_type = "MISC", ):
         clickBtn(dlg, misc.product)
         clickKeypad(dlg, "check")
         clickBtn(dlg, "DISC")
-        inputText(dlg, misc.manager_id, "Manager")
+        inputText_Re(dlg, misc.manager_id, "Manager")
         send_keys("{TAB}")
-        inputText(dlg, misc.manager_pass, "Password")
+        inputText_Re(dlg, misc.manager_pass, "Password")
         send_keys("{ENTER}")
         clickDiscount(dlg, disc, misc.customer_id, misc.customer_name, misc.address, misc.tin, misc.bus_style)
         clickBtn(dlg, "CASH")
@@ -121,7 +121,7 @@ def free(dlg, transaction_type = "FREE" ):
         clickBtn(dlg, free.product)
         clickKeypad(dlg, "check")
         clickBtn(dlg, tender)
-        inputText(dlg, free.charge_to, "Charge")
+        inputText_Re(dlg, free.charge_to, "Charge")
         send_keys("{ENTER}")
         if(checkIfExist(dlg,'RE-ROUTE')) :
             clickBtn(dlg, 'RE-ROUTE')
@@ -140,26 +140,26 @@ def bulk(dlg, transaction_type = 'BULK\r\nORDER'):
         duplicate_exists = True  # Set initial flag
 
         while duplicate_exists:
-            inputText(dlg, generate_random_number(6), "Contract")  # Input the random number
+            inputText_Re(dlg, generate_random_number(6), "Contract")  # Input the random number
             send_keys("{TAB}")
             #Check if the contract number is a duplicate
             duplicate_exists = checkIfExist(dlg, 'Duplicate Contract Number!', "Text")
             if duplicate_exists:
                 clickBtn('OK')  
-        inputText(dlg, bulk.name, "Name")
+        inputText_Re(dlg, bulk.name, "Name")
         send_keys("{TAB}")
-        inputText(dlg, generate_random_number(7), "Phone")
+        inputText_Re(dlg, generate_random_number(7), "Phone")
         send_keys("{TAB}")
         doubleClickDateArrow(dlg)
         send_keys("{TAB}")
-        inputText(dlg, bulk.time, "Time")
+        inputText_Re(dlg, bulk.time, "Time")
         send_keys("{TAB}")
-        inputText(dlg, bulk.funcRoom, "FuncRoom")
+        inputText_Re(dlg, bulk.funcRoom, "FuncRoom")
         send_keys("{ENTER}")
         clickBtn(dlg, 'DISC')
-        inputText(dlg, bulk.manager_id, "Manager")
+        inputText_Re(dlg, bulk.manager_id, "Manager")
         send_keys("{TAB}")
-        inputText(dlg, bulk.manager_pass, "Password")
+        inputText_Re(dlg, bulk.manager_pass, "Password")
         send_keys("{ENTER}")
         clickDiscount(dlg, disc, bulk.customer_id, bulk.customer_name, bulk.address, bulk.tin, bulk.bus_style, promo_amount=20)
         clickBtn(dlg, 'CASH')
@@ -183,9 +183,9 @@ def foodDineIn(dlg, transaction_type='DINE IN'):
         clickBtn(dlg, dine_in.product)
         clickKeypad(dlg, "check")
         clickBtn(dlg, "DISC")
-        inputText(dlg, dine_in.manager_id, "Manager")
+        inputText_Re(dlg, dine_in.manager_id, "Manager")
         send_keys("{TAB}")
-        inputText(dlg, dine_in.manager_pass, "Password")
+        inputText_Re(dlg, dine_in.manager_pass, "Password")
         send_keys("{ENTER}")
         clickDiscount(dlg, disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style)
         clickBtn(dlg, "CASH")
@@ -207,9 +207,9 @@ def foodTakeOut(dlg, transaction_type = "TAKE OUT"):
         clickBtn(dlg, take_out.product)
         clickKeypad(dlg, "check")
         clickBtn(dlg, "DISC")
-        inputText(dlg, take_out.manager_id, "Manager")
+        inputText_Re(dlg, take_out.manager_id, "Manager")
         send_keys("{TAB}")
-        inputText(dlg, take_out.manager_pass, "Password")
+        inputText_Re(dlg, take_out.manager_pass, "Password")
         send_keys("{ENTER}")
         clickDiscount(dlg, disc, take_out.customer_id, take_out.customer_name, take_out.address, take_out.tin, take_out.bus_style)
         clickBtn(dlg, "CASH")
@@ -228,10 +228,10 @@ def bacchusDineIn(dlg, transaction_type='DINE IN') :
     clickBtn(dlg, transaction_type)
     for disc in dine_in.disc :
         #----server and table----#
-        inputText(dlg, dine_in.cashier_id, "Server")
+        inputText_Re(dlg, dine_in.cashier_id, "Server?")
         clickKeypad(dlg, 'check')
         clickBtn(dlg, dine_in.table)
-        inputText(dlg, '1', "Pax")
+        inputText_Re(dlg, '1', "Pax")
         #----server and table----#
         send_keys("{ENTER}")
         clickBtn(dlg, dine_in.prod_group)
@@ -242,16 +242,16 @@ def bacchusDineIn(dlg, transaction_type='DINE IN') :
             clickBtn(dlg, 'RE-ROUTE')
             clickBtn(dlg, 'P O S')
         #----recall----#
-        inputText(dlg, dine_in.cashier_id, "Server")
+        inputText_Re(dlg, dine_in.cashier_id, "Server?")
         send_keys("{ENTER}")
         clickBtn(dlg, dine_in.table)
         #----recall----#
         clickKeypad(dlg, "check")
         clickBtn(dlg, 'FINAL\r\nPAYMENT')
         clickBtn(dlg, 'DISC')
-        inputText(dlg, dine_in.manager_id, "Manager")
+        inputText_Re(dlg, dine_in.manager_id, "Manager")
         send_keys("{TAB}")
-        inputText(dlg, dine_in.manager_pass, "Password")
+        inputText_Re(dlg, dine_in.manager_pass, "Password")
         send_keys("{ENTER}")
         clickDiscount(dlg, disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style, 20
                     )
@@ -264,10 +264,10 @@ def bacchusTakeOut(dlg, transaction_type='TAKE OUT') :
     clickBtn(dlg, transaction_type)
     for disc in dine_in.disc :
         #----server and table----#
-        inputText(dlg, dine_in.cashier_id, "Server")
+        inputText_Re(dlg, dine_in.cashier_id, "Server?")
         send_keys("{ENTER}")
         clickBtn(dlg, dine_in.table)
-        inputText(dlg, '1', 'Pax')
+        inputText_Re(dlg, '1', 'Pax')
         #----server and table----#
         send_keys("{ENTER}")
         clickBtn(dlg, dine_in.prod_group)
@@ -278,16 +278,16 @@ def bacchusTakeOut(dlg, transaction_type='TAKE OUT') :
             clickBtn(dlg, 'RE-ROUTE')
             clickBtn(dlg, 'P O S')
         #----recall----#
-        inputText(dlg, dine_in.cashier_id, 'Server')
+        inputText_Re(dlg, dine_in.cashier_id, 'Server?')
         send_keys("{ENTER}")
         clickBtn(dlg, dine_in.table)
         #----recall----#
         clickKeypad(dlg, "check")
         clickBtn(dlg, 'FINAL\r\nPAYMENT')
         clickBtn(dlg, 'DISC')
-        inputText(dlg, dine_in.manager_id, "Manager")
+        inputText_Re(dlg, dine_in.manager_id, "Manager")
         send_keys("{TAB}")
-        inputText(dlg, dine_in.manager_pass, "Password")
+        inputText_Re(dlg, dine_in.manager_pass, "Password")
         send_keys("{ENTER}")
         clickDiscount(dlg, disc, dine_in.customer_id, dine_in.customer_name, dine_in.address, dine_in.tin, dine_in.bus_style, 20
                     )
