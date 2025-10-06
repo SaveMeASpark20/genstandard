@@ -33,7 +33,7 @@ def punch_takeout(dlg: any,
     prod_parent : List[str],
     counts: List[int],
     tenders: List[str],
-    amounts: Optional[List[str]] = None,
+    amounts: Optional[List[int]] = None,
     disc: Optional[str] = None,
     tender_disc: Optional[str] = None,
     isFinalPayment = False,
@@ -74,6 +74,8 @@ def punch_takeout(dlg: any,
     manager = config.manager_cred
     bachus_mainmenu_btn = config.bacchus_mainmenu_btn
 
+    
+
     cashier_sign_setup_table(dlg, cashier.cashier_id, takeout.table, pax)
 
     if prod_addons is None:
@@ -94,25 +96,27 @@ def punch_takeout(dlg: any,
     #     parent_spec_ins = [None] * len(prod)
     # if qty_spec_ins is None:
     #     qty_spec_ins = [None] * len(prod)
-    if dito is None:
-        dito = [None] * len(prod)
+    dito_copy = dito
+    if dito_copy is None:
+        dito_copy = [None] * len(prod)
         
    
-    initial_punch(dlg, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito, open_memo, open_memo_prod)
-
+    initial_punch(dlg, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito_copy, open_memo, open_memo_prod)
 
     clickKeypad(dlg, 'check') #after punching check to go to tender section
     if not isFinalPayment :
         store_order(dlg, cashier.cashier_id, takeout.table)
 
-    if dito :
+    if dito  :
         time.sleep(2)
+        print('pumasok din dito')
+        print(dito)
         if (checkIfExist(dlg, "VQP", control_type="Window")):
             print('Transaction Type (DINE IN) Does Not Match! is exist')
             clickBtn(dlg, 'OK')
             clickBckMgrMenu(dlg, bachus_mainmenu_btn)
             clickBtn(dlg, 'DINE IN')
-            cashier_sign_setup_table(dlg, cashier.cashier_id, takeout.table)
+        cashier_sign_setup_table(dlg, cashier.cashier_id, takeout.table)
 
     if transfers:
         transfer(dlg, transfers, 'Text')
@@ -136,8 +140,11 @@ def punch_takeout(dlg: any,
         time.sleep(2)
         cancel_all(dlg, 'CANCEL\r\nORDER')
 
-    if not isFinalPayment and not isCancelAll:
-        clickKeypad(dlg, 'check')
+    if not isCancelAll:
+        
+
+        if not isFinalPayment:
+            clickKeypad(dlg, 'check')
 
         if split_bill_pax:
             split_bill(dlg, split_bill_pax, pax)
@@ -179,7 +186,6 @@ def punch_takeout(dlg: any,
         
         #check kung may reroute
         re_route(dlg)
-
         # para sure na fully tender talaga
         if checkIfExistVisibleClickable(dlg, 'CASH') and not checkIfExist(dlg, 'VQP', control_type='Window'):
             print('Amount tendered not sufficient tender cash exact amount')
@@ -191,13 +197,17 @@ def punch_takeout(dlg: any,
         while not checkIfExist(dlg, 'Server?', control_type="Edit"):
             wait_time = 1
             print("waiting makita yung server input uli")
+            re_route(dlg)
             if checkIfExist(dlg, 'OK'):
                 clickBtn(dlg, 'OK')
             time.sleep(wait_time)
         #this is for di/to function to go back to TAKE OUT transaction
-        if dito:
+
+        if dito :
+            print('pumasok dito')
+            print(dito)
             inputText(dlg, cashier.cashier_id, 'Server?')
             send_keys("{ENTER}")
             clickBckMgrMenu(dlg, bachus_mainmenu_btn)
             clickBtn(dlg, 'TAKE OUT')
-    
+        

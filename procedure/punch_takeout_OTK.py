@@ -38,7 +38,7 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
     prod_parent : List[str],
     counts: List[int],
     tenders: List[str],
-    amounts: Optional[List[str]] = None,
+    amounts: Optional[List[int]] = None,
     disc: Optional[str] = None,
     tender_disc: Optional[str] = None,
     isFinalPayment = False,
@@ -106,11 +106,12 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
     #     parent_spec_ins = [None] * len(prod)
     # if qty_spec_ins is None:
     #     qty_spec_ins = [None] * len(prod)
-    if dito is None:
-        dito = [None] * len(prod)
+    dito_copy = dito
+    if dito_copy is None:
+        dito_copy = [None] * len(prod)
         
    
-    initial_punch(dlg2, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito, open_memo, open_memo_prod)
+    initial_punch(dlg2, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito_copy, open_memo, open_memo_prod)
 
     # if split_bill_pax:
     #     split_bill(dlg2, split_bill_pax, pax)
@@ -206,13 +207,14 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
             clickBtn(dlg, 'DINE IN')
         
         if moveTo:
-            print('dito ba magmemess up?')
             cashier_sign_setup_table(dlg, cashier.cashier_id, table=moveTo)
         else:
             cashier_sign_setup_table(dlg, cashier.cashier_id, table=takeout.table)
 
-        if not isFinalPayment and not isCancelAll:
-            clickKeypad(dlg, 'check')
+        if not isCancelAll:
+
+            if not isFinalPayment :
+                clickKeypad(dlg, 'check')
 
             if split_bill_pax:
                 # clickKeypad(dlg, 'check')
@@ -236,7 +238,6 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
 
             #check kung may reroute
             re_route(dlg)
-
             if checkIfExistVisibleClickable(dlg, 'CASH') and not checkIfExist(dlg, 'VQP', control_type='Window'):
                 print('Amount tendered not sufficient tender cash exact amount')
                 clickTender(dlg, 'CASH')
@@ -244,6 +245,7 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
             while not checkIfExist(dlg, 'Server?', control_type="Edit"):
                 wait_time = 1
                 print("waiting makita yung server input uli")
+                re_route(dlg)
                 if checkIfExist(dlg, 'OK'):
                     clickBtn(dlg, 'OK')
                 time.sleep(wait_time)
@@ -257,4 +259,4 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
 
 
 
-    
+        

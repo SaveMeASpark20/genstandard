@@ -10,10 +10,16 @@ from transaction.dinein import bacchusDineIn
 from transaction.dinein import bacchusDineInOTK
 from transaction.takeout import bacchusTakeOut
 from transaction.takeout import bacchusTakeOutOTK
+from transaction.delivery import delivery
+from transaction.bulk import bulk
 from sequence.cashierSignon import cashierSignon
+from handles.tender_amount import tender_amount
 from pywinauto.findwindows import find_elements
 from function.clickButton import clickBtn
+from function.util import checkIfExist
 from handles.open_reg import open_reg
+from sequence.backMgrMenu import clickBckMgrMenu
+from configuration.config import config
 import time
 
 
@@ -60,10 +66,27 @@ def main(backend="uia"):
     bacchusDineIn(dlg1)
     bacchusDineInOTK(dlg1, dlg2)
 
+    if checkIfExist(dlg1, 'Server?'):
+        clickBckMgrMenu(dlg1, 'bacchusx')
+    if checkIfExist(dlg2, 'Server?'):
+        clickBckMgrMenu(dlg2, 'bacchusx')
+
     bacchusTakeOut(dlg1)
     bacchusTakeOutOTK(dlg1, dlg2)
 
-if __name__ == "__main__":
-    main()
+    if checkIfExist(dlg1, 'Server?'):
+        clickBckMgrMenu(dlg1, 'bacchusx')
+    if checkIfExist(dlg2, 'Server?'):
+        clickBckMgrMenu(dlg2, 'bacchusx')
+
+    delivery(dlg1)
+    if checkIfExist(dlg, 'Trans#', control_type="HeaderItem"):
+        clickBckMgrMenu(dlg1, 'x')
+
+    bulk(dlg1)
+    
 
     
+
+if __name__ == "__main__":
+    main()

@@ -31,7 +31,7 @@ def punch(dlg: any,
     prod_parent : List[str],
     counts: List[int],
     tenders: List[str],
-    amounts: Optional[List[str]] = None,
+    amounts: Optional[List[int]] = None,
     disc: Optional[str] = None,
     tender_disc: Optional[str] = None,
     isFinalPayment = False,
@@ -91,11 +91,12 @@ def punch(dlg: any,
     #     parent_spec_ins = [None] * len(prod)
     # if qty_spec_ins is None:
     #     qty_spec_ins = [None] * len(prod)
-    if dito is None:
-        dito = [None] * len(prod)
+    dito_copy = dito
+    if dito_copy is None:
+        dito_copy = [None] * len(prod)
         
    
-    initial_punch(dlg, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito, open_memo, open_memo_prod)
+    initial_punch(dlg, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito_copy, open_memo, open_memo_prod)
 
 
     clickKeypad(dlg, 'check') #after punching check to go to tender section
@@ -123,9 +124,11 @@ def punch(dlg: any,
     if isCancelAll:
         time.sleep(2)
         cancel_all(dlg, 'CANCEL\r\nORDER')
+    
+    if not isCancelAll:
 
-    if not isFinalPayment and not isCancelAll:
-        clickKeypad(dlg, 'check')
+        if not isFinalPayment:
+            clickKeypad(dlg, 'check')
 
         if split_bill_pax:
             split_bill(dlg, split_bill_pax, pax)
@@ -167,7 +170,6 @@ def punch(dlg: any,
         
         #check kung may reroute
         re_route(dlg)
-
         # para sure na fully tender talaga
         if checkIfExistVisibleClickable(dlg, 'CASH') and not checkIfExist(dlg, 'VQP', control_type='Window'):
             print('Amount tendered not sufficient tender cash exact amount')
@@ -178,10 +180,11 @@ def punch(dlg: any,
         #     clickBtn(dlg, 'OK')
         while not checkIfExist(dlg, 'Server?', control_type="Edit"):
             wait_time = 1
+            re_route(dlg)
             print("waiting makita yung server input uli")
             if checkIfExist(dlg, 'OK'):
                 clickBtn(dlg, 'OK')
             time.sleep(wait_time)
 
 
-    
+        

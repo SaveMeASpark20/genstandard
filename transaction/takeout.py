@@ -8,17 +8,19 @@ from configuration.config import config
 def bacchusTakeOut(dlg, trantype='TAKE OUT'):
 
     sequence = config.take_out.punching_sequence
-    if(len(sequence) > 0):
+    if(len(sequence) > 0 and checkIfExist(dlg, trantype)):
         clickBtn(dlg, trantype)
     for punch_data in sequence:
         punch_takeout(dlg, **vars(punch_data))
     
     
-def bacchusTakeOutOTK(dlg2, dlgOTK, trantype='TAKE OUT'):
+def bacchusTakeOutOTK(dlg1, dlgOTK, trantype='TAKE OUT'):
     
     # clickBtn(dlgOTK, trantype)
     sequence = config.take_out_OTK.punching_sequence
-    if(len(sequence) > 0 and checkIfExist(dlg2, trantype)):
-        clickBtn(dlg2, trantype)
+    if(len(sequence) > 0 and checkIfExist(dlg1, trantype)):
+        clickBtn(dlg1, trantype)
+    if(len(sequence) > 0 and checkIfExist(dlgOTK, trantype)):
+        clickBtn(dlgOTK, trantype)
     for punch_data in sequence:
-        punch_takeout_OTK(dlg2, dlgOTK, **vars(punch_data))
+        punch_takeout_OTK(dlg1, dlgOTK, **vars(punch_data))

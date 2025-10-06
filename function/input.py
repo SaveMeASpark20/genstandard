@@ -16,6 +16,7 @@ def inputText(dlg, text, name, max_retries=5, delay=0.5):
             
             textbox.set_focus()
             send_keys(str(text), with_spaces=True)
+            # textbox.set_edit_text(str(text))
             print(f"✅ Successfully typed: '{text}' on attempt {attempt + 1}")
             return True  # exit if success
 

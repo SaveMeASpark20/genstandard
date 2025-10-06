@@ -16,6 +16,7 @@ from handles.tender_amount import tender_amount
 from handles.cashier_sign_setup_table import cashier_sign_setup_table
 from handles.open_reg import open_reg
 from function.util import checkIfExist
+import time
 
 
 def main(backend="uia"):
@@ -105,7 +106,15 @@ def main(backend="uia"):
     # tender_amount(dlg1,amounts=None, tenders=['CASH'])
     # product = ['HALO-HALO']
     # prod = product[0].replace("\r\n", " ")
+
     dlg1.print_control_identifiers()
+    # for index in range(16):
+    #     dlg1.set_focus()
+    #     button = dlg1.child_window(control_type="Button", found_index=index)
+    #     print(f"🖱️ Clicking button at index {index}'")
+    #     button.click_input()
+    #     time.sleep(2)
+
     # if(checkIfExist(dlg1, "VQP", control_type="Window")):
     #     clickBtn(dlg1, 'OK')
     # print(prod)
