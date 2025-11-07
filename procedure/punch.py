@@ -1,5 +1,6 @@
 from typing import List, Optional
 from function.clickButton import clickBtn
+from function.clickButton import clickBtnCoords
 from function.clickButton import clickKeypad
 from function.util import checkIfExist
 from function.util import checkIfExistVisibleClickable
@@ -70,6 +71,7 @@ def punch(dlg: any,
     dine_in = config.dine_in
     cashier = config.cashier_cred
     manager = config.manager_cred
+    coords_check_btn = config.coords_check_btn
 
     cashier_sign_setup_table(dlg, cashier.cashier_id, dine_in.table, pax)
 
@@ -98,8 +100,8 @@ def punch(dlg: any,
    
     initial_punch(dlg, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito_copy, open_memo, open_memo_prod)
 
-
-    clickKeypad(dlg, 'check') #after punching check to go to tender section
+    clickBtnCoords(dlg, coords_check_btn) #after punching check to go to tender section
+        
     if not isFinalPayment :
         store_order(dlg, cashier.cashier_id, dine_in.table)
     

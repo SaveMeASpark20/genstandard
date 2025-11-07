@@ -73,8 +73,8 @@ def punch_takeout(dlg: any,
     cashier = config.cashier_cred
     manager = config.manager_cred
     bachus_mainmenu_btn = config.bacchus_mainmenu_btn
+    coords_check_btn = config.coords_check_btn
 
-    
 
     cashier_sign_setup_table(dlg, cashier.cashier_id, takeout.table, pax)
 
@@ -103,7 +103,9 @@ def punch_takeout(dlg: any,
    
     initial_punch(dlg, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito_copy, open_memo, open_memo_prod)
 
-    clickKeypad(dlg, 'check') #after punching check to go to tender section
+
+    clickBtnCoords(dlg, coords_check_btn) #after punching check to go to tender section
+
     if not isFinalPayment :
         store_order(dlg, cashier.cashier_id, takeout.table)
 

@@ -9,13 +9,14 @@ from configuration.config import config
 from transaction.dinein import bacchusDineIn
 from sequence.cashierSignon import cashierSignon
 from pywinauto.findwindows import find_elements
-from function.clickButton import clickKeypad
 from function.clickButton import clickNonBtn
-from function.clickButton import clickBtn
 from handles.tender_amount import tender_amount
 from handles.cashier_sign_setup_table import cashier_sign_setup_table
 from handles.open_reg import open_reg
 from function.util import checkIfExist
+from function.clickDisc import clickDiscount
+from function.input import inputText
+
 import time
 
 
@@ -36,9 +37,9 @@ def main(backend="uia"):
             dlg1 = dlg
             print("✅ Identified App1 (POS)")
 
-        elif dlg.child_window(title=otk_no, control_type="Text").exists():
-            dlg2 = dlg
-            print("✅ Identified App2 (OTK)")
+        # elif dlg.child_window(title=otk_no, control_type="Text").exists():
+        #     dlg2 = dlg
+        #     print("✅ Identified App2 (OTK)")
 
     # try:
     #     # Mapping of index to keypad value (reversed from your original)
@@ -107,7 +108,7 @@ def main(backend="uia"):
     # product = ['HALO-HALO']
     # prod = product[0].replace("\r\n", " ")
 
-    dlg1.print_control_identifiers()
+    # dlg1.print_control_identifiers()
     # for index in range(16):
     #     dlg1.set_focus()
     #     button = dlg1.child_window(control_type="Button", found_index=index)
@@ -121,6 +122,11 @@ def main(backend="uia"):
     # clickNonBtn(dlg2, product, control_type='Text')
     # dlg2.print_control_identifiers()
     # Click button index 3 (for example)
+    # clickBtn(dlg1, 'DISC')
+    # inputText(dlg1, 11, "Manager Code:")
+    dlg1.set_focus()
+    # clickBtnImg(dlg,'check')
+    dlg1.click_input(coords=(1159,418))
     
 
 

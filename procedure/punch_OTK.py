@@ -1,6 +1,7 @@
 from typing import List, Optional
 from function.clickButton import clickBtn
 from function.clickButton import clickKeypad
+from function.clickButton import clickBtnCoords
 from function.util import checkIfExist
 from function.util import checkIfExistVisibleClickable
 from function.util import checkIfExistEscapeSpecChars
@@ -78,6 +79,8 @@ def punch_OTK(dlg1: any, dlg2: any,
     dine_in_otk = config.dine_in_OTK
     cashier = config.cashier_cred
     manager = config.manager_cred
+    coords_check_btn = config.coords_check_btn
+
 
     if checkIfExist(dlg2, 'DINE IN'):
         clickBtn(dlg2, 'DINE IN')
@@ -115,7 +118,9 @@ def punch_OTK(dlg1: any, dlg2: any,
     # if split_bill_pax:
     #     split_bill(dlg2, split_bill_pax, pax)
         
-    clickKeypad(dlg2, 'check') #after punching check to go to tender section
+    clickBtnCoords(dlg, coords_check_btn) #after punching check to go to tender section
+
+     #after punching check to go to tender section
     if not isFinalPayment :
         store_order(dlg2, cashier.cashier_id, dine_in_otk.table)
 

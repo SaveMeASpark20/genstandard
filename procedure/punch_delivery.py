@@ -1,6 +1,5 @@
 from typing import List, Optional
 from function.clickButton import clickBtn
-from function.clickButton import clickKeypad
 from function.util import checkIfExist
 from function.util import checkIfExistVisibleClickable
 from tender.clickTender import clickTender
@@ -21,6 +20,8 @@ from datetime import datetime
 from function.clickButton import clickDeliveryBtn
 from function.input import inputText_Re
 from sequence.del_cust_info import del_cust_info
+from function.clickButton import clickBtnCoords
+
 
 def punch_delivery(dlg: any,
     prod: List[str],
@@ -54,6 +55,8 @@ def punch_delivery(dlg: any,
     
     delivery = config.delivery
     manager = config.manager_cred
+    coords_check_btn = config.coords_check_btn
+
 
     if prod_addons is None:
         prod_addons = [None] * len(prod)
@@ -71,7 +74,6 @@ def punch_delivery(dlg: any,
     if dito_copy is None:
         dito_copy = [None] * len(prod)
     
-    delivery = config.delivery
     clickDeliveryBtn(dlg, "new")
     del_cust_info(dlg)
 
@@ -82,7 +84,7 @@ def punch_delivery(dlg: any,
         cancel_all(dlg, 'CANCEL\r\nORDER')
 
     if not isCancelAll:
-        clickKeypad(dlg, 'check')
+        clickBtnCoords(dlg, coords_check_btn)
 
         if isReturn:
             return_to_product(dlg)

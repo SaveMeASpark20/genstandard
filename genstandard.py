@@ -60,7 +60,7 @@ def main(backend="uia"):
         dlg2.set_focus()
         managerSignon(dlg2)
         open_reg(dlg2)
-        # cashierSignon(dlg2)
+        cashierSignon(dlg2)
 
     time.sleep(5)
     bacchusDineIn(dlg1)
@@ -80,6 +80,7 @@ def main(backend="uia"):
         clickBckMgrMenu(dlg2, 'bacchusx')
 
     delivery(dlg1)
+    
     if checkIfExist(dlg, 'Trans#', control_type="HeaderItem"):
         clickBckMgrMenu(dlg1, 'x')
 

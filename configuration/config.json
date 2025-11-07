@@ -3,6 +3,7 @@
     "go_bat_loc_OTK": "E:\\b9328eee\\winvqp93OTK\\go.bat",
     "POS": "01",
     "OTK": "T1",
+    "coords_check_btn": [1159,418],
     "restaurant_type": "FINE DINING",
     "manager_cred": {
         "manager_id": "11",
@@ -38,7 +39,7 @@
     },
     "dine_in" : {
       "comment" : [
-         {
+        {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
           "counts": [1],
@@ -422,7 +423,7 @@
       "bus_style" : "12313131",
       "appcode": "123456",
       "punching_sequence" : [
-                 
+
       ]
     },
     "dine_in_OTK": {
@@ -621,7 +622,6 @@
         }
       ],
       "punching_sequence" :[
-                     
       ]
     },
     "take_out": {
@@ -827,7 +827,7 @@
         }
       ],
       "punching_sequence" : [       
-      
+
       ]
     },
     "take_out_OTK": {
@@ -1099,7 +1099,7 @@
         }
       ],
       "punching_sequence" :[
-                        
+        
       ]
     },
     "delivery": {
@@ -1251,13 +1251,6 @@
       "note" : "fast del",
       "comment": "fast hand",
        "punching_sequence": [
-                {
-          "prod": ["HALO-HALO"],
-          "prod_parent": ["QA TEST\r\nPRODS"],
-          "counts": [1],
-          "tenders": ["CASH"],
-          "disc": "EMPLOYEE DISC"
-        }
        ]
     },
     "bulk": { 
@@ -1275,13 +1268,146 @@
         "name" : "CHRISTIAN LEGUIZ",
         "time" : "7:00PM", 
         "funcRoom" : "NB1",
+        "bulk_comment": [
+                    {
+            "prod": ["HALO-HALO"],
+            "prod_parent": ["QA TEST\r\nPRODS"],
+            "counts": [10],
+            "tenders": ["CASH"]
+          },          {
+            "prod": ["HALO-HALO"],
+            "prod_parent": ["QA TEST\r\nPRODS"],
+            "counts": [10],
+            "tenders": ["CASH"],
+            "deposits":[200],
+            "additional_dep": [200]
+          },
+          {
+            "prod": ["HALO-HALO"],
+            "prod_parent": ["QA TEST\r\nPRODS"],
+            "counts": [5],
+            "tenders": ["CASH"],
+            "deposits":[200],
+            "additional_prod_parent":["QA TEST\r\nPRODS"],
+            "additional_prod": ["HALO-HALO"],
+            "additional_count": [5],
+            "additional_dep": [200]
+          },
+                    {
+          "prod": ["SEAFOOD\r\nBUNDLE"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "meal_components" : [["OYSTER", "BAKED\r\nSCALLOPS", "SG SALMON\r\nBELLY"]],
+          "qty_meal_components" : [[2, 1, 1]],
+          "prod_addons" : [["KK B\r\nALAMANG", "KK B\r\nBALAYAN", "LECHE\r\nPLAN", "CHECK", "PLAIN\r\nRICE", "GARLIC\r\nFRD RICE", "CHECK"]],
+          "qty_prod_addons": [[3, 2, 1, 1, 1, 1, 1]]
+        },
+                        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "counts": [10],
+          "tenders": ["GIFT CERT"]
+          }
+        ],
         "punching_sequence": [
+
+
+                {
+            "prod": ["HALO-HALO"],
+            "prod_parent": ["QA TEST\r\nPRODS"],
+            "counts": [10],
+            "tenders": ["ON ACCOUNT"]
+          },
+                  {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "counts": [10],
+          "tenders": ["CASH"],
+          "isInputCustInfo": true
+        },
+                {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "counts": [10],
+          "tenders": ["CASH"],
+          "disc": "SENIOR DISC"
+        },
+              {
+            "prod": ["HALO-HALO"],
+            "prod_parent": ["QA TEST\r\nPRODS"],
+            "counts": [10],
+            "tenders": ["CASH"],
+            "disc":"PWD DISC"
+          },
+              {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "counts": [10],
+          "tenders": ["CASH"],
+          "disc": "NACD"
+        },
+              {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "counts": [10],
+          "tenders": ["CASH"],
+          "disc": "MEDAL OF VALOR"
+        },
+             {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "counts": [10],
+          "tenders": ["CREDIT CARD"]
+        },
+             {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "counts": [10],
+          "tenders": ["DEBIT CARD"]
+        },
         {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
-          "counts": [1],
-          "tenders": ["CASH"]
-        }
+          "counts": [10],
+          "tenders": ["CHECKS"]
+        },
+                      {
+            "prod": ["HALO-HALO"],
+            "prod_parent": ["QA TEST\r\nPRODS"],
+            "counts": [10],
+            "tenders": ["CASH"],
+            "disc":"SOLO PARENT"
+          },
+
+                        {
+            "prod": ["HALO-HALO"],
+            "prod_parent": ["QA TEST\r\nPRODS"],
+            "counts": [10],
+            "tenders": ["CASH"],
+            "disc":"EMPLOYEE DISC"
+          },
+                        {
+            "prod": ["HALO-HALO"],
+            "prod_parent": ["QA TEST\r\nPRODS"],
+            "counts": [10],
+            "tenders": ["CASH"],
+            "disc":"PROMO AMOUNT"
+          }
         ]
     }
 }

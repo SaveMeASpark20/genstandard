@@ -2,6 +2,7 @@ from function.clickButton import clickBtn
 from function.input import inputText_Re
 from configuration.config import config
 from function.util import checkIfExistWithRegex
+from function.util import checkIfExist
 from pywinauto.keyboard import send_keys
 
 def clickDiscount(dlg, disc_name, customer_id, customer_name, address, tin, bus_style, promo_amount=20,dc_pax=1, restaurant_type='FASTFOOD'):

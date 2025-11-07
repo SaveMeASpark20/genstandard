@@ -76,3 +76,22 @@ def inputTextOnScreen(dlg, text):
             clickBtn(dlg, "space bar")  # Adjust this based on your system
         else:
             clickBtn(dlg, char)
+
+def focusOnlyOnInput(dlg, input_to_focus, max_retries=5, delay=0.5):
+    attempt = 0
+
+    while attempt < max_retries:
+        try:
+            textbox = dlg.child_window(control_type="Edit", title=input_to_focus)
+
+            # Make sure the control exists and is visible
+            if not textbox.exists(timeout=1):
+                raise Exception(f"{input_to_focus} not found")
+            
+            textbox.set_focus()
+            return True  # exit if success
+
+        except Exception as e:
+            print(f"⚠️ Attempt {attempt + 1} failed: {e}")
+            attempt += 1
+            time.sleep(delay)

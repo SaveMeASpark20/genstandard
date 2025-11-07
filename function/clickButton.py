@@ -1,7 +1,7 @@
 from pywinauto import Application
 import time
-from configuration.config import config
 from pywinauto.keyboard import send_keys
+import pyautogui
 import re
 
 def clickBtn(dlg, button_name, retries=3, delay=2, control_type="Button", secondsToSleep=0):
@@ -60,7 +60,11 @@ def clickKeypad(dlg, keypadVal, retries=3, delay=2, control_type="Button"):
         "x": 12,
         0: 13,
         ".": 14,
-        "check": 15
+        "check": 15,
+        "other 0": 16,
+        "other dot": 17,
+        "other check": 18
+
     }
 
     # Directly get the index
@@ -179,10 +183,7 @@ def doubleClickDateArrow(dlg):
     dlg.click_input(coords=(418, 348))
     dlg.click_input(coords=(418, 348))
 
-
-
-
-
-
-    
+def clickBtnCoords(dlg, coordinates): #coordinates should be only 2 elements in array to convert it into tuple
+    tuple_coordinates = tuple(coordinates) 
+    dlg.click_input(coords=tuple_coordinates)
 

@@ -3,11 +3,13 @@ from function.clickButton import clickKeypad
 from function.clickButton import clickNonBtn
 from function.input import inputText_Re
 from pywinauto.keyboard import send_keys
+import time
 
 def initial_punch(dlg, prod, counts, prod_parent,  prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito, open_memo, open_memo_prod ):
 
     for index, (product, qty, parent,add_on, qpa, mc, qmc, dt) in enumerate(zip(prod, counts, prod_parent, prod_addons, qty_prod_addons,  meal_components, qty_meal_components, dito )):
         current_parent =  prod_parent[0]
+        print("Index: ", index)
         if qty and product and parent:
                 if dt == 1:
                     clickBtn(dlg, 'DI/TO')
@@ -22,7 +24,7 @@ def initial_punch(dlg, prod, counts, prod_parent,  prod_addons, qty_prod_addons,
                     clickBtn(dlg, parent)
                     current_parent = parent
 
-                for _ in range(qty):
+                for _ in range(qty): 
                     clickBtn(dlg, product)
                     if qmc and mc:
                         if not isinstance(mc, list):
@@ -43,9 +45,10 @@ def initial_punch(dlg, prod, counts, prod_parent,  prod_addons, qty_prod_addons,
                         if not isinstance(qpa, list):
                             qpa = [qpa]
 
-                        for qty, add in zip(qpa, add_on) :
+                        for qty, add in zip(qpa, add_on) : 
                             for _ in range(qty) :
                                 if add == 'CHECK' or add == 'SKIP':
+                                    print("nagcheck ba dito sa skip or check?",  add) #sira to pagka pangalawang addon ng product pataas hahahahah
                                     clickKeypad(dlg, "check")
                                 else: 
                                     clickBtn(dlg, add)
@@ -70,6 +73,7 @@ def initial_punch(dlg, prod, counts, prod_parent,  prod_addons, qty_prod_addons,
             clickBtn(dlg, 'OPEN MEMO')
             inputText_Re(dlg, memo, 'Spcl Inst')
             send_keys("{ENTER}")
+
 
 
             

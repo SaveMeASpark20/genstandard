@@ -1,22 +1,18 @@
 from typing import List, Optional
 from function.clickButton import clickBtn
+from function.clickButton import clickBtnCoords
 from function.clickButton import clickKeypad
-from function.clickDisc import clickDiscount
-from function.clickButton import doubleClickDateArrow
+from handles.cust_info import cust_info
 from function.util import checkIfExist
-from function.util import generate_random_number
-from function.input import inputText
 from function.clickButton import clickBlkRecallBtn
 from configuration.config import config
-from pywinauto.keyboard import send_keys
 from handles.initial_punch import initial_punch
-from function.util import checkIfExistVisibleClickable
 from handles.tender_amount import tender_amount
-from handles.re_route import re_route
 from handles.depo_cust_info import depo_cust_info
-from tender.clickTender import clickTender
+from handles.depo_cust_info import depo_cust_noinfo
 from handles.cancel_product import cancel_product
 from handles.add_product import add_product
+from handles.discount import discount
 import time
 
 
@@ -51,8 +47,9 @@ def punch_bulk(dlg: any,
     open_memo : Optional[List[str]] = None,
     open_memo_prod : Optional[List[str]] = None
 ): 
-    bulk = config.bulk_transact
+    bulk = config.bulk
     manager = config.manager_cred
+    coords_check_btn = config.coords_check_btn
 
     if prod_addons is None:
         prod_addons = [None] * len(prod)
@@ -73,13 +70,17 @@ def punch_bulk(dlg: any,
     initial_punch(dlg, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito_copy, open_memo, open_memo_prod)
 
     #go to tender
-    clickKeypad(dlg, "check")
+    time.sleep(2) #KAPAG GALING SA ADD ONS HINDI sya gumagana yung check hahahaha
+    clickBtnCoords(dlg, coords_check_btn)
  
     #click deposits and input cust info
     depo_cust_info(dlg)
 
+    # if disc:
+    #     discount(dlg, disc, bulk.customer_id, bulk.customer_name, bulk.address, bulk.tin, bulk.bus_style, promo_amount=20)
+
     if disc:
-        clickDiscount(dlg, disc, bulk.customer_id, bulk.customer_name, bulk.address, bulk.tin, bulk.bus_style, promo_amount=20)
+        discount(dlg, manager.manager_id, manager.manager_pass, disc, bulk.customer_id, bulk.customer_name, bulk.address, bulk.tin, bulk.bus_style, 20, dc_pax)
 
     if deposits:
         tender_amount(dlg, deposits, tenders)
@@ -87,31 +88,20 @@ def punch_bulk(dlg: any,
         tender_amount(dlg, amounts, tenders)
     
     if checkIfExist(dlg, 'More Deposits?', control_type="Text"):
-        clickBtn(dlg,'No')
-
-
-    # re_route(dlg)
-
-    # if checkIfExistVisibleClickable(dlg, 'CASH') and not checkIfExist(dlg, 'VQP', control_type='Window'):
-    #     print('Amount tendered not sufficient tender cash exact amount')
-    #     clickTender(dlg, 'CASH')
+        clickBtn(dlg,'NO')
     
-    # while not checkIfExist(dlg, 'Trans#', control_type="HeaderItem"):
-    #     wait_time = 1
-    #     re_route(dlg)
-    #     print("waiting makita yung server input uli")
-    #     if checkIfExist(dlg, 'OK'):
-    #         clickBtn(dlg, 'OK')
-    #     time.sleep(wait_time)  
+    while checkIfExist(dlg, 'CASH', control_type="Button"):
+        wait_time = 1
+        print("checking if CASH is still visible means there's a prompt")
+        if checkIfExist(dlg, 'OK'):
+            clickBtn(dlg, 'OK')
+        time.sleep(wait_time) 
 
-    clickBtn(dlg, 'RECALL', secondsToSleep=5)
-    clickBlkRecallBtn(dlg, 'check')
-    clickKeypad(dlg, 'check')
 
-    if cancel_prod or additional_prod:   
+    if cancel_prod or additional_prod or additional_dep:   
+        print("cancel order:", cancel_prod, "additional prod:", additional_prod)
         clickBtn(dlg, 'RECALL', secondsToSleep=5)
         clickBlkRecallBtn(dlg, 'check')
-        clickKeypad(dlg, 'check')
 
         if cancel_prod:
             cancel_product(dlg, cancel_prod, isFinalPayment, manager.manager_id, manager.manager_pass)
@@ -119,37 +109,41 @@ def punch_bulk(dlg: any,
         if additional_prod and additional_count and additional_prod_parent:
             add_product(dlg, additional_prod_parent, additional_prod, additional_count, additional_addons)
 
+        clickKeypad(dlg, 'check')
+        depo_cust_noinfo(dlg)
+            
         if additional_dep :
-            tender_amount(dlg, additional_dep, tenders)
+            tender_amount(dlg, additional_dep, tenders) #di pa supported yung mga maraming tender. mahirap eh
         else :
-            tender_amount(dlg, amounts, tenders)
+            tender_amount(dlg, amounts, tenders) #di pa supported yung mga maraming tender. mahirap eh
 
         if checkIfExist(dlg, 'More Deposits?', control_type="Text"):
-            clickBtn(dlg,'No')
+            clickBtn(dlg,'NO')
         
-        #re_route(dlg)
-            
-        # # para sure na fully tender talaga
-        # if checkIfExistVisibleClickable(dlg, 'CASH') and not checkIfExist(dlg, 'VQP', control_type='Window'):
-        #     print('Amount tendered not sufficient tender cash exact amount')
-        #     clickTender(dlg, 'CASH')
+        while checkIfExist(dlg, 'CASH', control_type="Button"):
+            wait_time = 1
+            print("checking if CASH is still visible means there's a prompt")
+            if checkIfExist(dlg, 'OK'):
+                clickBtn(dlg, 'OK')
+            time.sleep(wait_time) 
         
-        # while not checkIfExist(dlg, 'Trans#', control_type="HeaderItem"):
-        #     wait_time = 1
-        #     re_route(dlg)
-        #     print("waiting makita yung server input uli")
-        #     if checkIfExist(dlg, 'OK'):
-        #         clickBtn(dlg, 'OK')
-        #     time.sleep(wait_time)
     
     clickBtn(dlg, 'RECALL', secondsToSleep=5)
 
     clickBlkRecallBtn(dlg, 'check')
     clickKeypad(dlg, 'check')
+        
     clickBtn(dlg, 'FINAL\r\nPAYMENT')
+    if isInputCustInfo:
+        cust_info(dlg)
     clickBtn(dlg, 'CASH')
-    clickBtn(dlg, 'OK')
-    if(checkIfExist(dlg,'RE-ROUTE')) :
-        clickBtn(dlg, 'RE-ROUTE')
-        clickBtn(dlg, 'P O S')
+    if checkIfExist(dlg, 'CASH Info', control_type='Group'):
+        clickKeypad(dlg, "exact amount")
+
+    while checkIfExist(dlg, 'CASH', control_type="Button"):
+        wait_time = 1
+        print("checking if CASH is still visible means there's a prompt")
+        if checkIfExist(dlg, 'OK'):
+            clickBtn(dlg, 'OK')
+        time.sleep(wait_time) 
 

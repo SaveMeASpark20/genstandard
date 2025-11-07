@@ -1,6 +1,7 @@
 from typing import List, Optional
 from function.clickButton import clickBtn
 from function.clickButton import clickKeypad
+from function.clickButton import clickBtnCoords
 from function.util import checkIfExist
 from function.util import checkIfExistVisibleClickable
 from function.util import checkIfExistEscapeSpecChars
@@ -81,6 +82,8 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
     cashier = config.cashier_cred
     manager = config.manager_cred
     bachus_mainmenu_btn = config.bacchus_mainmenu_btn
+    coords_check_btn = config.coords_check_btn
+
 
     if checkIfExist(dlg2, 'TAKE OUT'):
         clickBtn(dlg2, 'TAKE OUT')
@@ -116,7 +119,9 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
     # if split_bill_pax:
     #     split_bill(dlg2, split_bill_pax, pax)
         
-    clickKeypad(dlg2, 'check') #after punching check to go to tender section
+    # clickKeypad(dlg2, 'check') #after punching check to go to tender section
+    clickBtnCoords(dlg, coords_check_btn) #after punching check to go to tender section
+
     if not isFinalPayment:
         store_order(dlg2, cashier.cashier_id, takeout_OTK.table)
 
