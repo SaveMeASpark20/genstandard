@@ -6,11 +6,12 @@ from function.clickButton import clickKeypad
 from function.util import checkIfExist
 from function.clickButton import clickBtn
 
-def clickTender(dlg, tender_btn, retries=3, delay=2, amount= 0 , control_type="Button") -> int:
+def clickTender(dlg, tender_btn, retries=3, delay=2, amount = 0 , control_type="Button") -> int:
     """Attempts to click a button multiple times with a delay in between."""
     attempt = 0
     tenderBtnVal = {
         "CASH": "CASH",
+        "CASHDENOM": "CASHDENOM",
         "CREDIT CARD": "CREDIT\r\nCARD",
         "DEBIT CARD": "DEBIT\r\nCARD",
         "GIFT CERT" : "GIFT CERT",
@@ -29,6 +30,24 @@ def clickTender(dlg, tender_btn, retries=3, delay=2, amount= 0 , control_type="B
         return 0
     while attempt < retries:
         try:
+
+            if(tender_btn == 'CASHDENOM'):
+                if(amount == 20 or amount == 50 or amount == 100 or amount == 200 or amount == 500 or amount == 1000):
+                    clickBtn(dlg, str(amount))
+                    # inputText_Re(dlg, amount, "Amount")
+                    # send_keys("{ENTER}")
+                    if(checkIfExist(dlg, 'Change Not Allowed For This Tender!')):
+                        clickBtn(dlg, 'OK')
+                        clickKeypad(dlg, "exact amount")
+                        return 2
+                    return 1
+                
+                print(f"{amount} is not a denomination will exact amount")
+                clickBtn(dlg, 'CASH')
+                inputText_Re(dlg, 0, "Amount")
+                clickKeypad(dlg, "exact amount")
+                return 3
+            
             button = dlg.child_window(title_re=btn, control_type=control_type)
             button.click()
             print(f"Clicked '{btn}' successfully.")

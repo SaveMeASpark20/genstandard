@@ -118,7 +118,7 @@ def punch_OTK(dlg1: any, dlg2: any,
     # if split_bill_pax:
     #     split_bill(dlg2, split_bill_pax, pax)
         
-    clickBtnCoords(dlg, coords_check_btn) #after punching check to go to tender section
+    clickBtnCoords(dlg2, coords_check_btn) #after punching check to go to tender section
 
      #after punching check to go to tender section
     if not isFinalPayment :

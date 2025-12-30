@@ -1,9 +1,10 @@
 {
-    "go_bat_loc": "E:\\b9328eee\\winvqp93\\go.bat",
-    "go_bat_loc_OTK": "E:\\b9328eee\\winvqp93OTK\\go.bat",
+    "go_bat_loc": "E:\\b9328q\\winvqp93\\go.bat",
+    "go_bat_loc_OTK": "E:\\b9328q\\winvqp93t1\\go.bat",
     "POS": "01",
     "OTK": "T1",
     "coords_check_btn": [1159,418],
+    "coords_x_btn": [823,414],
     "restaurant_type": "FINE DINING",
     "manager_cred": {
         "manager_id": "11",
@@ -37,6 +38,27 @@
       "acc_name": "CHRISTIAN LEGUIZ",
       "acc_no": "12331311"
     },
+    "run_standard": [
+        {"_comment": "CASHIER_SIGNON"},
+        {"_comment": "DINE IN"},
+        {"_comment": "GO_BACK_TO_MGR"},
+        {"_comment": "GENERATE_REPORT"},
+        {"_comment": "TAKE OUT"},
+        {"_comment": "GO_BACK_TO_MGR"},
+        {"_comment": "GENERATE_REPORT"},
+        {"_comment": "DELIVERY"},
+        {"_comment": "GO_BACK_TO_MGR"},
+        {"_comment": "GENERATE_REPORT"},
+        {"_comment": "FREE"},
+        {"_comment": "GO_BACK_TO_MGR"},
+        {"_comment": "GENERATE_REPORT"},
+        {"_comment": "BULK"},
+        {"_comment": "GO_BACK_TO_MGR"},   
+        {"_comment": "GENERATE_REPORT"},
+        {"action": "MISC"},
+        {"action": "GO_BACK_TO_MGR"},
+        {"action": "GENERATE_REPORT"}
+    ],
     "dine_in" : {
       "comment" : [
         {
@@ -45,7 +67,7 @@
           "counts": [1],
           "tenders": ["CASH"]
         },
-                {
+        {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
           "counts": [1],
@@ -421,9 +443,8 @@
       "address" : "758 Delpan",
       "tin" : "1231312",
       "bus_style" : "12313131",
-      "appcode": "123456",
-      "punching_sequence" : [
-
+      "appcode": "123456", 
+      "punching_sequence": [
       ]
     },
     "dine_in_OTK": {
@@ -438,7 +459,7 @@
       "tin" : "1231312",
       "bus_style" : "12313131",
       "appcode": "123456",
-      "comment": [
+      "punching_sequence1": [
                       {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
@@ -632,7 +653,7 @@
       "tin" : "1231312",
       "bus_style" : "12313131",
       "appcode": "123456",
-      "comment" : [
+      "punching_sequence1" : [
          {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
@@ -842,7 +863,7 @@
       "tin" : "1231312",
       "bus_style" : "12313131",
       "appcode": "123456",
-      "comment": [
+      "punching_sequence1": [
                          {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
@@ -1103,7 +1124,7 @@
       ]
     },
     "delivery": {
-      "del_comment": [
+      "punching_sequence1": [
                {
           "prod": ["HALO-HALO"],
           "prod_parent": ["QA TEST\r\nPRODS"],
@@ -1269,7 +1290,10 @@
         "time" : "7:00PM", 
         "funcRoom" : "NB1",
         "bulk_comment": [
-                    {
+
+        ],
+        "punching_sequence1": [
+                              {
             "prod": ["HALO-HALO"],
             "prod_parent": ["QA TEST\r\nPRODS"],
             "counts": [10],
@@ -1310,10 +1334,7 @@
           "prod_addons" : ["LECHE\r\nPLAN"],
           "counts": [10],
           "tenders": ["GIFT CERT"]
-          }
-        ],
-        "punching_sequence": [
-
+          },
 
                 {
             "prod": ["HALO-HALO"],
@@ -1408,6 +1429,267 @@
             "tenders": ["CASH"],
             "disc":"PROMO AMOUNT"
           }
+        ], 
+        "punching_sequence": [
         ]
-    }
+        
+    },
+    "misc" : {
+      "punching_sequence1" : [
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [1],
+          "prod_addons" : ["SKIP"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "disc": "SOLO PARENT"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [5],
+          "tenders": ["CASH"],
+          "disc": "SENIOR DISC",
+          "isReturn": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "qty_spec_ins" : [1],
+          "parent_spec_ins" : ["HALO-HALO"],
+          "spec_ins" : ["SERVE NOW"]
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "counts": [1],
+          "tenders": ["CASH"]
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "prod_addons" : ["SKIP"],
+          "qty_prod_addons" : [1],
+          "counts": [1],
+          "tenders": ["CASH"]
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "prod_addons" : ["LECHE\r\nPLAN"],
+          "qty_prod_addons" : [1],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "qty_spec_ins" : [1, 1],
+          "parent_spec_ins" : ["CRMY\r\nCARBONARA"],
+          "spec_ins" : ["XTRA\r\nCHEESE", "XTRA CRB\r\nSAUCE"]
+        },
+        {
+          "prod": ["MEATY\r\nSPAG"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "qty_prod_addons":[1],
+          "prod_addons":["SKIP"],
+          "tenders": ["CASH"],
+          "qty_spec_ins" : [1, 1, 1, 1],
+          "parent_spec_ins" : ["MEATY\r\nSPAG"],
+          "spec_ins" : ["XTRA\r\nCHEESE", "XTRA SPAG\r\nSAUCE", "NO HOTDOG", "LESS MEAT"]
+        },
+        {
+          "prod": ["MEATY\r\nSPAG MEAL"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "qty_meal_components" : [1],
+          "meal_components" : ["COKE IN\r\nCAN"],
+          "qty_spec_ins" : [1, 1, 1, 1],
+          "parent_spec_ins" : ["MEATY SPAG MC"],
+          "spec_ins" : ["XTRA\r\nCHEESE", "LESS MEAT"]
+        },
+        {
+          "prod": ["SEAFOOD\r\nBUNDLE"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "qty_meal_components" : [[2, 1, 1]],
+          "meal_components" : [["OYSTER", "BAKED\r\nSCALLOPS", "SG SALMON\r\nBELLY"]],
+          "prod_addons" : [["KK B\r\nALAMANG", "KK B\r\nBALAYAN", "LECHE\r\nPLAN", "CHECK", "PLAIN\r\nRICE", "GARLIC\r\nFRD RICE", "CHECK"]],
+          "qty_prod_addons": [[3, 2, 1, 1, 1, 1, 1]]
+        },
+        {
+          "prod": ["FAMILY\r\nBUNDLE"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "qty_meal_components" : [[1, 1, 1]],
+          "meal_components" : [["SG SALMON\r\nBELLY", "CHOPSEUY\r\nRICE", "SPARERIBS"]],
+          "prod_addons" : [[ "PLAIN\r\nRICE", "CHECK", "CHECK", "BUKO\r\nPANDAN", "CHECK"]],
+          "qty_prod_addons": [[1, 1, 1, 1, 1]]
+        },
+        {
+          "prod": ["BARKADA\r\nBUNDLE"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "qty_meal_components" : [[1, 5, 10, 1, 1]],
+          "meal_components" : [["INIHAW\r\nBANGUS", "ISAW", "SAN MIG\r\nLIGHT", "SAN MIG\r\nPILSEN", "RED HORSE"]],
+          "prod_addons" : [[ "PLAIN\r\nRICE", "CHECK", "LECHE\r\nPLAN", "KK B\r\nALAMANG", "CHECK" ]],
+          "qty_prod_addons": [[1, 1, 5, 5, 1]]
+        },
+        {
+          "prod": ["CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "prod_addons" : ["SKIP"],
+          "qty_prod_addons" : [1],
+          "counts": [1],
+          "tenders": ["CREDIT CARD"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["DEBIT CARD"]
+        },
+       
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "isZeroRated": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "isInputCustInfo": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "dito": [1]
+        },
+        {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA" ],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "prod_addons" : ["","LECHE\r\nPLAN"],
+          "qty_prod_addons" : [0,1],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "transfers": ["CRMY CRBONARA"]
+        },
+        {
+          "prod": ["HALO-HALO", "CRMY\r\nCARBONARA"],
+          "prod_parent": ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"],
+          "qty_prod_addons" : [0,1],
+          "prod_addons" : ["", "LECHE\r\nPLAN"],
+          "counts": [1, 1],
+          "tenders": ["CASH"],
+          "isCancelAll": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "open_memo": ["MEDIUM RARE"],
+          "open_memo_prod": ["HALO-HALO"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "qty_spec_ins" : [1],
+          "parent_spec_ins" : ["HALO-HALO"],
+          "spec_ins" : ["SERVE NOW"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CASH"],
+          "is_print_bill": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["ON ACCOUNT"],
+          "disc": "EMPLOYEE DISC"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": ["CHECKS"],
+          "disc": "PROMO AMOUNT"
+        }
+      ],
+      "prod_parent1" : "QA TEST\r\nPRODS",
+      "product" : "HALO-HALO",
+      "product2" : "GOLDEN\r\nPORKCHOP",
+      "product3" : "STEAMED\r\nCHICKEN",
+      "table" : "TABLE 1",
+      "customer_name" : "CHRISTIAN LEGUIZ",
+      "customer_id" : "123131313",
+      "address" : "758 Delpan",
+      "tin" : "1231312",
+      "bus_style" : "12313131",
+      "appcode": "123456", 
+      "punching_sequence": [
+      ]
+    },
+    "free": {
+      "punching_sequence": [
+          {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": "MARKETING"
+        },
+         {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": "REPRESENTA\r\nTION"
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": "REPRESENTA\r\nTION",
+          "isCancelAll": true
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": "MARKETING",
+          "open_memo": ["MEDIUM RARE"],
+          "open_memo_prod": ["HALO-HALO"]
+        },
+        {
+          "prod": ["HALO-HALO"],
+          "prod_parent": ["QA TEST\r\nPRODS"],
+          "counts": [1],
+          "tenders": "MARKETING",
+          "qty_spec_ins" : [1],
+          "parent_spec_ins" : ["HALO-HALO"],
+          "spec_ins" : ["SERVE NOW"]
+        }
+      ]
+    },
+    "open1":[], "open2":[]
+    
+
+    
 }

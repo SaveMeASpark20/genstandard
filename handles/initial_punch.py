@@ -9,7 +9,6 @@ def initial_punch(dlg, prod, counts, prod_parent,  prod_addons, qty_prod_addons,
 
     for index, (product, qty, parent,add_on, qpa, mc, qmc, dt) in enumerate(zip(prod, counts, prod_parent, prod_addons, qty_prod_addons,  meal_components, qty_meal_components, dito )):
         current_parent =  prod_parent[0]
-        print("Index: ", index)
         if qty and product and parent:
                 if dt == 1:
                     clickBtn(dlg, 'DI/TO')

@@ -12,6 +12,8 @@ from transaction.takeout import bacchusTakeOut
 from transaction.takeout import bacchusTakeOutOTK
 from transaction.delivery import delivery
 from transaction.bulk import bulk
+from transaction.normal import miscellaneous
+from transaction.free import free
 from sequence.cashierSignon import cashierSignon
 from handles.tender_amount import tender_amount
 from pywinauto.findwindows import find_elements
@@ -27,6 +29,8 @@ import time
 def main(backend="uia"):
     pos_no = config.POS
     otk_no = config.OTK
+    run_standard = config.run_standard
+    restaurant_type = config.restaurant_type
 
     dlg1, dlg2 = None, None
 
@@ -45,6 +49,7 @@ def main(backend="uia"):
             dlg2 = dlg
             print("✅ Identified App2 (OTK)")
 
+
     # Step 2: Open main POS window if not found
     if dlg1 is None:
         print("⚠️ POS window not found, launching...")
@@ -62,29 +67,55 @@ def main(backend="uia"):
         open_reg(dlg2)
         cashierSignon(dlg2)
 
-    time.sleep(5)
+    actions = {
+        "CASHIER_SIGNON": cashierSignon,
+        "DINE IN": dineIn,
+        "TAKE OUT": takeOut,
+        "DELIVERY": delivery,
+        "FREE": free,
+        "OPENAUTO": openauto,
+        "GO_BACK_TO_MGR": clickBckMgrMenu,
+        "BULK": bulk,
+        "MISC": misc
+    }
+
     bacchusDineIn(dlg1)
-    bacchusDineInOTK(dlg1, dlg2)
 
-    if checkIfExist(dlg1, 'Server?'):
-        clickBckMgrMenu(dlg1, 'bacchusx')
-    if checkIfExist(dlg2, 'Server?'):
-        clickBckMgrMenu(dlg2, 'bacchusx')
 
-    bacchusTakeOut(dlg1)
-    bacchusTakeOutOTK(dlg1, dlg2)
+    # time.sleep(5)
+    # bacchusDineIn(dlg1)
+    # bacchusDineInOTK(dlg1, dlg2)
 
-    if checkIfExist(dlg1, 'Server?'):
-        clickBckMgrMenu(dlg1, 'bacchusx')
-    if checkIfExist(dlg2, 'Server?'):
-        clickBckMgrMenu(dlg2, 'bacchusx')
+    # if checkIfExist(dlg1, 'Server?'):
+    #     clickBckMgrMenu(dlg1, 'bacchusx')
+    # if checkIfExist(dlg2, 'Server?'):
+    #     clickBckMgrMenu(dlg2, 'bacchusx')
 
-    delivery(dlg1)
+    # bacchusTakeOut(dlg1)
+    # bacchusTakeOutOTK(dlg1, dlg2)
+
+    # if checkIfExist(dlg1, 'Server?'):
+    #     clickBckMgrMenu(dlg1, 'bacchusx')
+    # if checkIfExist(dlg2, 'Server?'):
+    #     clickBckMgrMenu(dlg2, 'bacchusx')
+
+    # delivery(dlg1)
     
-    if checkIfExist(dlg, 'Trans#', control_type="HeaderItem"):
-        clickBckMgrMenu(dlg1, 'x')
+    # if checkIfExist(dlg, 'Trans#', control_type="HeaderItem"):
+    #     clickBckMgrMenu(dlg1, 'x')
 
-    bulk(dlg1)
+    # bulk(dlg1)
+    # if checkIfExist(dlg, 'BULK ORDER', control_type="HeaderItem"):
+    #     clickBckMgrMenu(dlg1, 'x')
+
+    # miscellaneous(dlg1)
+    
+    # if(checkIfExist(dlg, 'MISC', control_type="HeaderItem")):
+    #     clickBckMgrMenu(dlg1, 'x')
+
+    # free(dlg1)
+    
+    
     
 
     

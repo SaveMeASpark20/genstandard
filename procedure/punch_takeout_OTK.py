@@ -120,7 +120,7 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
     #     split_bill(dlg2, split_bill_pax, pax)
         
     # clickKeypad(dlg2, 'check') #after punching check to go to tender section
-    clickBtnCoords(dlg, coords_check_btn) #after punching check to go to tender section
+    clickBtnCoords(dlg2, coords_check_btn) #after punching check to go to tender section
 
     if not isFinalPayment:
         store_order(dlg2, cashier.cashier_id, takeout_OTK.table)
@@ -168,7 +168,7 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
             dlg2.set_focus()
             cashier_sign_setup_table(dlg2, cashier.cashier_id, table= takeout_OTK.table)
 
-        clickKeypad(dlg2, 'check') 
+        clickBtnCoords(dlg2, coords_check_btn) #after punching check to go to tender section
 
         if tender_disc :
             discount(dlg2, manager.manager_id, manager.manager_pass, tender_disc, takeout.customer_id, takeout.customer_name, takeout.address, takeout.tin, takeout.bus_style, 20, dc_pax)
@@ -219,7 +219,7 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
         if not isCancelAll:
 
             if not isFinalPayment :
-                clickKeypad(dlg, 'check')
+                clickBtnCoords(dlg2, coords_check_btn) #after punching check to go to tender section
 
             if split_bill_pax:
                 # clickKeypad(dlg, 'check')

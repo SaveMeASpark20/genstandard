@@ -37,6 +37,8 @@ def main(backend="uia"):
             dlg1 = dlg
             print("✅ Identified App1 (POS)")
 
+
+
         # elif dlg.child_window(title=otk_no, control_type="Text").exists():
         #     dlg2 = dlg
         #     print("✅ Identified App2 (OTK)")
@@ -125,8 +127,9 @@ def main(backend="uia"):
     # clickBtn(dlg1, 'DISC')
     # inputText(dlg1, 11, "Manager Code:")
     dlg1.set_focus()
+    dlg1.print_control_identifiers()
+    
     # clickBtnImg(dlg,'check')
-    dlg1.click_input(coords=(1159,418))
     
 
 

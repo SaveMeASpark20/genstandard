@@ -184,6 +184,7 @@ def doubleClickDateArrow(dlg):
     dlg.click_input(coords=(418, 348))
 
 def clickBtnCoords(dlg, coordinates): #coordinates should be only 2 elements in array to convert it into tuple
+    print('click check')
     tuple_coordinates = tuple(coordinates) 
     dlg.click_input(coords=tuple_coordinates)
 

@@ -26,7 +26,9 @@ from handles.return_to_product import return_to_product
 from handles.cancel_all import cancel_all
 from sequence.backMgrMenu import clickBckMgrMenu
 from sequence.managerSignon import managerSignon
+from function.clickButton import clickBtnCoords
 import time
+
 
 def punch_takeout(dlg: any,
     prod: List[str],
