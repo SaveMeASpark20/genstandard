@@ -44,13 +44,22 @@ def punch_normal(dlg: any,
     qty_meal_components : Optional[List[int]] = None,
     dito : Optional[List[int]] = None,
     open_memo : Optional[List[str]] = None,
-    open_memo_prod : Optional[List[str]] = None
+    open_memo_prod : Optional[List[str]] = None,
+    trantype:  str = None,
 ):  
     
-    misc = config.misc
+
+    transaction = getattr(config, trantype, None)
+    if transaction is None:
+        print(f"No config found for action: {trantype}")
+        return
+    
+
+
+    # transaction = config
+    
     manager = config.manager_cred
     coords_check_btn = config.coords_check_btn
-
 
     if prod_addons is None:
         prod_addons = [None] * len(prod)
@@ -68,8 +77,8 @@ def punch_normal(dlg: any,
     if dito_copy is None:
         dito_copy = [None] * len(prod)
     
-    if checkIfExist(dlg, 'MISC'):
-        clickBtn(dlg, 'MISC')
+    # if checkIfExist(dlg, 'MISC'):
+    #     clickBtn(dlg, 'MISC')
 
     initial_punch(dlg, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito_copy, open_memo, open_memo_prod)
     
@@ -88,11 +97,11 @@ def punch_normal(dlg: any,
         clickBtnCoords(dlg, coords_check_btn)
                 
         if disc:
-            discount(dlg, manager.manager_id, manager.manager_pass, disc, misc.customer_id, misc.customer_name, misc.address, misc.tin, misc.bus_style, 20, dc_pax)
+            discount(dlg, manager.manager_id, manager.manager_pass, disc, transaction.customer_id, transaction.customer_name, transaction.address, transaction.tin, transaction.bus_style, 20, dc_pax)
         
         if(isZeroRated):
             zero_rated(dlg)
-                
+        
         if(isInputCustInfo):
             cust_info(dlg)
         

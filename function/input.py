@@ -3,6 +3,7 @@ from function.clickButton import clickKeypad
 import time
 from pywinauto.keyboard import send_keys
 
+
 def inputText(dlg, text, name, max_retries=5, delay=0.5):
     attempt = 0
 
@@ -95,3 +96,13 @@ def focusOnlyOnInput(dlg, input_to_focus, max_retries=5, delay=0.5):
             print(f"⚠️ Attempt {attempt + 1} failed: {e}")
             attempt += 1
             time.sleep(delay)
+
+
+def inputTextNoName(dlg, text):
+    try:
+        dlg.set_focus()
+        
+        send_keys("Hello World{ENTER}")
+        print("Successful type:", text)
+    except Exception as e:
+        print("Failed to type text:", e)

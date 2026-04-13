@@ -16,11 +16,40 @@ from handles.re_route import re_route
 from handles.return_to_product import return_to_product
 from handles.cancel_all import cancel_all
 import time
+import re
 from datetime import datetime
 from function.clickButton import clickDeliveryBtn
 from function.input import inputText_Re
 from sequence.del_cust_info import del_cust_info
 from function.clickButton import clickBtnCoords
+
+def process_additional_products(dlg, coords_check_btn, amounts, tenders, **kwargs):
+    i = 1
+
+    while True:
+        prod = kwargs.get(f"additional_prod{i}")
+        count = kwargs.get(f"additional_count{i}")
+        parent = kwargs.get(f"additional_prod_parent{i}")
+        addons = kwargs.get(f"additional_addons{i}")
+
+        # Stop when no more numbered entries
+        if not prod or not count or not parent:
+            break
+
+        clickDeliveryBtn(dlg, "check")
+
+        add_product(
+            dlg,
+            parent,
+            prod,
+            count,
+            addons
+        )
+
+        clickBtnCoords(dlg, coords_check_btn)
+        tender_amount(dlg, amounts, tenders)
+
+        i += 1
 
 
 def punch_delivery(dlg: any,
@@ -50,7 +79,8 @@ def punch_delivery(dlg: any,
     qty_meal_components : Optional[List[int]] = None,
     dito : Optional[List[int]] = None,
     open_memo : Optional[List[str]] = None,
-    open_memo_prod : Optional[List[str]] = None
+    open_memo_prod : Optional[List[str]] = None,
+    **kwargs
 ):  
     
     delivery = config.delivery
@@ -114,15 +144,42 @@ def punch_delivery(dlg: any,
                 clickBtn(dlg, 'OK')
             time.sleep(wait_time)
 
-        if cancel_prod or additional_prod:   
-            clickDeliveryBtn(dlg, "check")
-            if cancel_prod:
-                cancel_product(dlg, cancel_prod, isFinalPayment, manager.manager_id, manager.manager_pass)
-            
-            if additional_prod and additional_count and additional_prod_parent:
-                add_product(dlg, additional_prod_parent, additional_prod, additional_count, additional_addons)
 
+        if cancel_prod:
+            clickDeliveryBtn(dlg, "check")
+            cancel_product(dlg, cancel_prod, isFinalPayment, manager.manager_id, manager.manager_pass)
+
+            clickBtnCoords(dlg, coords_check_btn)
             tender_amount(dlg, amounts, tenders)
+
+        
+
+        if additional_prod and additional_count and additional_prod_parent:
+            print("inside additional prod")
+            clickDeliveryBtn(dlg, "check")
+            add_product(dlg, additional_prod_parent, additional_prod, additional_count, additional_addons)
+                
+            clickBtnCoords(dlg, coords_check_btn)
+            tender_amount(dlg, amounts, tenders)
+            
+            #to cater if additional product looping has more than 2 additional product loop ex. additional_product1. etc
+            additional_kwargs = {}
+
+            for key in kwargs:
+                if key.startswith("additional_prod") and key[len("additional_prod"):].isdigit():
+                    number = key[len("additional_prod"):]  # gets "1", "2", etc.
+
+                    additional_kwargs[f"additional_prod{number}"] = kwargs[key][0]
+                    additional_kwargs[f"additional_count{number}"] = kwargs[f"additional_count{number}"][0]
+                    additional_kwargs[f"additional_prod_parent{number}"] = kwargs[f"additional_prod_parent{number}"][0]
+
+                    addon_key = f"additional_addons{number}"
+                    if addon_key in kwargs:
+                        additional_kwargs[f"additional_addons{number}"] = kwargs[addon_key][0]
+
+
+            process_additional_products(dlg, coords_check_btn, amounts, tenders, **kwargs)
+
 
             re_route(dlg)
             # para sure na fully tender talaga

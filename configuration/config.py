@@ -1,3 +1,16 @@
+
+"""
+    The function `dict_to_namespace` converts a dictionary into a namespace object in Python.
+    
+    :param d: The parameter `d` in the `dict_to_namespace` function represents the dictionary or list
+    that is being converted into a namespace object. The function recursively converts nested
+    dictionaries and lists into namespace objects using the `SimpleNamespace` class from the `types`
+    module
+    :return: The code snippet provided is reading a JSON configuration file named `config.json` located
+    next to the main executable file (assuming the script is frozen into an executable). The contents of
+    the JSON file are loaded and converted into a namespace object using the `dict_to_namespace`
+    function defined in the code.
+"""
 import os
 import sys
 import json

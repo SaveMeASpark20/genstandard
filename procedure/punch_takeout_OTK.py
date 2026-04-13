@@ -219,7 +219,8 @@ def punch_takeout_OTK(dlg1: any, dlg2: any,
         if not isCancelAll:
 
             if not isFinalPayment :
-                clickBtnCoords(dlg2, coords_check_btn) #after punching check to go to tender section
+                # clickBtnCoords(dlg2, coords_check_btn) #after punching check to go to tender section
+                clickKeypad(dlg, 'check')
 
             if split_bill_pax:
                 # clickKeypad(dlg, 'check')

@@ -11,3 +11,17 @@ def miscellaneous(dlg, trantype='MISC'):
     for punch_data in sequence:
         punch_normal(dlg, **vars(punch_data))
 
+
+def transaction(dlg, trantype='DINE IN'):
+    trantype_data = getattr(config, trantype, None)
+    sequence = getattr(trantype_data, "punching_sequence", [])
+
+    if(len(sequence) > 0 and checkIfExist(dlg, trantype)):
+        clickBtn(dlg, trantype)
+    for punch_data in sequence:
+        punch_normal(dlg, trantype=trantype, **vars(punch_data))
+
+# def trantype(dlg, trantype: str ):
+#     if(len)
+
+

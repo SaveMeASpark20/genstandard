@@ -68,7 +68,7 @@ def punch(dlg: any,
     open_memo_prod : Optional[List[str]] = None
 ):  
     
-    dine_in = config.dine_in
+    dine_in = config.bac_dine_in
     cashier = config.cashier_cred
     manager = config.manager_cred
     coords_check_btn = config.coords_check_btn

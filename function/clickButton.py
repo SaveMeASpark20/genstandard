@@ -169,22 +169,24 @@ def clickNonBtn(dlg, button_name, retries=3, delay=2, control_type="Button", sec
 
     
 def clickBlkRecallBtn(dlg, btn_name):
-    recallBtnVal = {
-        "check": 6,
-        "x":7
-    }
-    found_index = recallBtnVal.get(btn_name)
-    button = dlg.child_window(control_type="Button",found_index=found_index)
-    button.click()
+    # recallBtnVal = {
+    #     "check": 6,
+    #     "x":7
+    # }
+    # found_index = recallBtnVal.get(btn_name)
+    # button = dlg.child_window(control_type="Button",found_index=found_index)
+    # button.click()
+    # 424,567
+    dlg.click_input(coords=(424,567))
 
     
 
 def doubleClickDateArrow(dlg):
-    dlg.click_input(coords=(418, 348))
-    dlg.click_input(coords=(418, 348))
+    dlg.click_input(coords=(580, 477))
+    dlg.click_input(coords=(580,477))
 
 def clickBtnCoords(dlg, coordinates): #coordinates should be only 2 elements in array to convert it into tuple
-    print('click check')
+    print('click coords')
     tuple_coordinates = tuple(coordinates) 
     dlg.click_input(coords=tuple_coordinates)
 

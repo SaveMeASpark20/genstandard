@@ -2,7 +2,7 @@ from function.input import inputText_Re
 from configuration.config import config
 from pywinauto.keyboard import send_keys
 def clickZeroRated(dlg):
-    dine_in = config.dine_in
+    dine_in = config.bac_dine_in
     inputText_Re(dlg, dine_in.customer_id, "ID")
     send_keys("{TAB}")
     inputText_Re(dlg, dine_in.customer_name, "Cust Name")

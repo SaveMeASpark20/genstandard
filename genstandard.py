@@ -13,25 +13,34 @@ from transaction.takeout import bacchusTakeOutOTK
 from transaction.delivery import delivery
 from transaction.bulk import bulk
 from transaction.normal import miscellaneous
+from transaction.normal import transaction
 from transaction.free import free
 from sequence.cashierSignon import cashierSignon
 from handles.tender_amount import tender_amount
 from pywinauto.findwindows import find_elements
 from function.clickButton import clickBtn
-from function.util import checkIfExist
+from function.util import checkIfExistWithTitleRe
 from handles.open_reg import open_reg
 from sequence.backMgrMenu import clickBckMgrMenu
 from configuration.config import config
+from transaction.open_auto import open_auto
 import time
 
 
 
 def main(backend="uia"):
-    pos_no = config.POS
-    otk_no = config.OTK
-    run_standard = config.run_standard
+    
+    otk_no = getattr(config, "OTK", False)
+    pos_no = getattr(config, "POS", False)
+        
+    # pos_no = None
+    # otk_no = None
+    
+    # if config.POS:
+    #     pos_no = config.POS
+    # if config.OTK:
+    #     otk_no = config.OTK or None
     restaurant_type = config.restaurant_type
-
     dlg1, dlg2 = None, None
 
     # Step 1: Scan open windows
@@ -51,7 +60,7 @@ def main(backend="uia"):
 
 
     # Step 2: Open main POS window if not found
-    if dlg1 is None:
+    if dlg1 is None and pos_no:
         print("⚠️ POS window not found, launching...")
         dlg1 = openGo()
         dlg1.set_focus()
@@ -59,7 +68,7 @@ def main(backend="uia"):
         cashierSignon(dlg1)
 
 
-    if dlg2 is None:
+    if dlg2 is None and otk_no:
         print("ℹ️ OTK window not found, launching...")
         dlg2 = openGo(is_OTK=True)
         dlg2.set_focus()
@@ -67,58 +76,85 @@ def main(backend="uia"):
         open_reg(dlg2)
         cashierSignon(dlg2)
 
-    actions = {
-        "CASHIER_SIGNON": cashierSignon,
-        "DINE IN": dineIn,
-        "TAKE OUT": takeOut,
-        "DELIVERY": delivery,
-        "FREE": free,
-        "OPENAUTO": openauto,
-        "GO_BACK_TO_MGR": clickBckMgrMenu,
-        "BULK": bulk,
-        "MISC": misc
-    }
 
-    bacchusDineIn(dlg1)
+    run = config.run_standard
 
-
-    # time.sleep(5)
-    # bacchusDineIn(dlg1)
-    # bacchusDineInOTK(dlg1, dlg2)
-
-    # if checkIfExist(dlg1, 'Server?'):
-    #     clickBckMgrMenu(dlg1, 'bacchusx')
-    # if checkIfExist(dlg2, 'Server?'):
-    #     clickBckMgrMenu(dlg2, 'bacchusx')
-
-    # bacchusTakeOut(dlg1)
-    # bacchusTakeOutOTK(dlg1, dlg2)
-
-    # if checkIfExist(dlg1, 'Server?'):
-    #     clickBckMgrMenu(dlg1, 'bacchusx')
-    # if checkIfExist(dlg2, 'Server?'):
-    #     clickBckMgrMenu(dlg2, 'bacchusx')
-
-    # delivery(dlg1)
+    def whatIsTransaction():
+        for transaction in ["DINE IN", "TAKE OUT", "DELIVERY", "MISC", "FREE", "BULK ORDER"]:
+            if(checkIfExistWithTitleRe(dlg1, transaction, 'HeaderItem')):
+                return transaction
+        return None
     
-    # if checkIfExist(dlg, 'Trans#', control_type="HeaderItem"):
-    #     clickBckMgrMenu(dlg1, 'x')
+    for step in run :
+        if not hasattr(step, 'action'):
+            print(f"Comment: {getattr(step, '_comment', 'No comment provided')}")
+            continue
+        action = step.action
 
-    # bulk(dlg1)
-    # if checkIfExist(dlg, 'BULK ORDER', control_type="HeaderItem"):
-    #     clickBckMgrMenu(dlg1, 'x')
+        if action and action.startswith('open'):
+            print("1", action)
+            open_auto(dlg1, action)
 
-    # miscellaneous(dlg1)
-    
-    # if(checkIfExist(dlg, 'MISC', control_type="HeaderItem")):
-    #     clickBckMgrMenu(dlg1, 'x')
+        elif action == "BACCDI":
+            print("2", action)
+            bacchusDineIn(dlg1)
+        
+        elif action == "BACCDIOTK":
+            print("3", action)
+            bacchusDineInOTK(dlg1, dlg2)
+        
+        elif action == "BACCTO":
+            print("3", action)
+            bacchusTakeOut(dlg1)
+        
+        elif action == "BACCTOOTK":
+            print("4", action)
+            bacchusTakeOutOTK(dlg1, dlg2)
 
-    # free(dlg1)
-    
-    
-    
+        elif action == "DELIVERY":
+            print("5", action)
+            delivery(dlg1)
+            
+        elif action == "BULK":
+            print("6", action)
+            bulk(dlg1)
+
+        elif action == 'MISC':
+            print("7", action)
+            miscellaneous(dlg1)
+
+        elif action == 'CASHIER_SIGN':
+            print("8", action)
+            
+            cashierSignon(dlg1)
+        
+        elif(action == 'FREE'):
+            print("9", action)
+            free(dlg1)
+
+        elif action == 'BACKTOMGR':
+            print("10", action)
+            currentTransaction = whatIsTransaction()
+
+            if(currentTransaction == None):
+                print("Can't find Transaction")
+                continue
+            if currentTransaction == "DELIVERY":
+                backToMgr = "x"
+            elif restaurant_type == "FINE DINING" and currentTransaction in ["TAKE OUT", "DINE IN"]:
+                backToMgr = "bacchusx"
+                print("restaurant_type :", restaurant_type)
+                print("Current_Transaction :", currentTransaction )
+            else:
+                backToMgr = "MGR MENU"
+            print(backToMgr)
+            clickBckMgrMenu(dlg1, backToMgr)
+        elif action == 'DINE IN':
+            transaction(dlg1, action)
+        else:
+            print("cant find the action: ", action)
+
 
     
-
 if __name__ == "__main__":
     main()

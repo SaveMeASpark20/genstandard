@@ -6,8 +6,7 @@ from procedure.punch_takeout_OTK import punch_takeout_OTK
 from configuration.config import config
 
 def bacchusTakeOut(dlg, trantype='TAKE OUT'):
-
-    sequence = config.take_out.punching_sequence
+    sequence = config.bac_take_out.punching_sequence
     if(len(sequence) > 0 and checkIfExist(dlg, trantype)):
         clickBtn(dlg, trantype)
     for punch_data in sequence:
@@ -17,7 +16,7 @@ def bacchusTakeOut(dlg, trantype='TAKE OUT'):
 def bacchusTakeOutOTK(dlg1, dlgOTK, trantype='TAKE OUT'):
     
     # clickBtn(dlgOTK, trantype)
-    sequence = config.take_out_OTK.punching_sequence
+    sequence = config.bac_take_out_OTK.punching_sequence
     if(len(sequence) > 0 and checkIfExist(dlg1, trantype)):
         clickBtn(dlg1, trantype)
     if(len(sequence) > 0 and checkIfExist(dlgOTK, trantype)):

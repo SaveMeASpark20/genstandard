@@ -16,8 +16,9 @@ from handles.open_reg import open_reg
 from function.util import checkIfExist
 from function.clickDisc import clickDiscount
 from function.input import inputText
-
 import time
+from transaction.open_auto import open_auto
+from pywinauto.keyboard import send_keys
 
 
 def main(backend="uia"):
@@ -36,8 +37,6 @@ def main(backend="uia"):
         if dlg.child_window(title=pos_no, control_type="Text").exists():
             dlg1 = dlg
             print("✅ Identified App1 (POS)")
-
-
 
         # elif dlg.child_window(title=otk_no, control_type="Text").exists():
         #     dlg2 = dlg
@@ -126,12 +125,21 @@ def main(backend="uia"):
     # Click button index 3 (for example)
     # clickBtn(dlg1, 'DISC')
     # inputText(dlg1, 11, "Manager Code:")
-    dlg1.set_focus()
-    dlg1.print_control_identifiers()
     
-    # clickBtnImg(dlg,'check')
+    run = config.run_standard
     
+    for step in run :
+        if not hasattr(step, 'action'):
+            # print(f"Comment: {getattr(step, '_comment', 'No comment provided')}")
+            continue
+        action = step.action
 
+        if action and action.startswith('open'):
+            print("action: ", action)
+            open_auto(dlg1, action)
+
+    # send_keys("text", with_spaces=True)
+            
 
 if __name__ == "__main__":
     main()

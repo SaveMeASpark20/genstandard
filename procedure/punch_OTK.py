@@ -75,8 +75,8 @@ def punch_OTK(dlg1: any, dlg2: any,
     dlg = dlg1
     dlg2 = dlg2
     
-    dine_in = config.dine_in
-    dine_in_otk = config.dine_in_OTK
+    dine_in = config.bac_dine_in
+    dine_in_otk = config.bac_dine_in_OTK
     cashier = config.cashier_cred
     manager = config.manager_cred
     coords_check_btn = config.coords_check_btn
