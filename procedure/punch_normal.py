@@ -15,52 +15,62 @@ from handles.cancel_all import cancel_all
 from function.clickButton import clickBtnCoords
 from handles.add_product import add_product
 from handles.cancel_product import cancel_product_coords
+from handles.head_count import handle_head_count
 
 import time
 
 def punch_normal(dlg: any,
     prod: List[str],
-    prod_parent : List[str],
+    prod_parent: List[str],
     counts: List[int],
     tenders: List[str],
     amounts: Optional[List[int]] = None,
     disc: Optional[str] = None,
-    isZeroRated = False,
-    isInputCustInfo = False,
+    isZeroRated=False,
+    isInputCustInfo=False,
     isReturn=False,
     isCancelAll=False,
+    pax: Optional[int] = None,
     dc_pax=1,
     cancel_prod: Optional[List[str]] = None,
-    prod_addons :  Optional[List[str]] = None ,
-    qty_prod_addons :  Optional[List[int]] = None ,
+    prod_addons:  Optional[List[str]] = None,
+    qty_prod_addons:  Optional[List[int]] = None,
     additional_prod: Optional[List[str]] = None,
-    additional_prod_parent : Optional[List[str]] = None ,
-    additional_count : Optional[List[str]] = None ,
-    additional_addons : Optional[List[str]] = None,
-    spec_ins : Optional[List[str]] = None,
-    parent_spec_ins : Optional[List[str]] = None ,
-    qty_spec_ins : Optional[List[int]] = None ,
-    meal_components : Optional[List[str]] = None ,
-    qty_meal_components : Optional[List[int]] = None,
-    dito : Optional[List[int]] = None,
-    open_memo : Optional[List[str]] = None,
-    open_memo_prod : Optional[List[str]] = None,
+    additional_prod_parent: Optional[List[str]] = None,
+    additional_count: Optional[List[str]] = None,
+    additional_addons: Optional[List[str]] = None,
+    spec_ins: Optional[List[str]] = None,
+    parent_spec_ins: Optional[List[str]] = None,
+    qty_spec_ins: Optional[List[int]] = None,
+    meal_components: Optional[List[str]] = None,
+    qty_meal_components: Optional[List[int]] = None,
+    dito: Optional[List[int]] = None,
+    open_memo: Optional[List[str]] = None,
+    open_memo_prod: Optional[List[str]] = None,
     trantype:  str = None,
+    **_extra_kwargs,
 ):  
-    
+    # Get transaction-specific config.
+    # Config keys are often snake_case (e.g. dine_in, take_out) while UI labels
+    # passed in can be upper case with spaces (e.g. "DINE IN").
+    transaction = None
+    if isinstance(trantype, str) and trantype.strip():
+        transaction = getattr(config, trantype, None)
+        if transaction is None:
+            normalized = trantype.strip().lower().replace(" ", "_")
+            transaction = getattr(config, normalized, None) or getattr(config, normalized.lower(), None)
 
-    transaction = getattr(config, trantype, None)
     if transaction is None:
         print(f"No config found for action: {trantype}")
         return
     
-
-
-    # transaction = config
-    
+    # Shared config values
     manager = config.manager_cred
     coords_check_btn = config.coords_check_btn
 
+    # Normalize optional list parameters.
+    # Avoids None errors when handlers expect lists.
+    # Makes list with the same len as prod filled with None.
     if prod_addons is None:
         prod_addons = [None] * len(prod)
     if qty_prod_addons is None:
@@ -70,16 +80,14 @@ def punch_normal(dlg: any,
     if prod_addons is None:
         prod_addons = [None] * len(prod)
     if meal_components is None:
-        meal_components = [None] *  len(prod)
+        meal_components = [None] * len(prod)
     if qty_meal_components is None:
         qty_meal_components = [None] * len(prod)
     dito_copy = dito
     if dito_copy is None:
         dito_copy = [None] * len(prod)
     
-    # if checkIfExist(dlg, 'MISC'):
-    #     clickBtn(dlg, 'MISC')
-
+    # 
     initial_punch(dlg, prod, counts, prod_parent, prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito_copy, open_memo, open_memo_prod)
     
     if isCancelAll:
@@ -97,7 +105,25 @@ def punch_normal(dlg: any,
         clickBtnCoords(dlg, coords_check_btn)
                 
         if disc:
-            discount(dlg, manager.manager_id, manager.manager_pass, disc, transaction.customer_id, transaction.customer_name, transaction.address, transaction.tin, transaction.bus_style, 20, dc_pax)
+            customer_id = getattr(transaction, "customer_id", "")
+            customer_name = getattr(transaction, "customer_name", "")
+            address = getattr(transaction, "address", "")
+            tin = getattr(transaction, "tin", "")
+            bus_style = getattr(transaction, "bus_style", "")
+
+            discount(
+                dlg,
+                manager.manager_id,
+                manager.manager_pass,
+                disc,
+                customer_id,
+                customer_name,
+                address,
+                tin,
+                bus_style,
+                20,
+                dc_pax,
+            )
         
         if(isZeroRated):
             zero_rated(dlg)
@@ -108,9 +134,11 @@ def punch_normal(dlg: any,
         if isReturn:
             return_to_product(dlg)
             
-        #tender the amount
+        # tender the amount
         tender_amount(dlg, amounts, tenders)
-        re_route(dlg)
+        # Prefer per-step pax override, otherwise fall back to per-transaction config, then default.
+        head_count_value = pax if pax is not None else getattr(transaction, "head_count", 1)
+        handle_head_count(dlg, head_count=head_count_value)
 
         if checkIfExistVisibleClickable(dlg, 'CASH') and not checkIfExist(dlg, 'VQP', control_type='Window'):
             print('Amount tendered not sufficient tender cash exact amount')
@@ -123,9 +151,3 @@ def punch_normal(dlg: any,
             if checkIfExist(dlg, 'OK'):
                 clickBtn(dlg, 'OK')
             time.sleep(wait_time)
-
-
-
-        
-
-        

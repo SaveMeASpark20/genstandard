@@ -1,35 +1,37 @@
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from pywinauto import Application
-from pywinauto.findwindows import ElementNotFoundError
+# from pywinauto.findwindows import ElementNotFoundError
 from sequence.managerSignon import managerSignon
 from sequence.openGo import openGo
 from configuration.config import config
-from transaction.dinein import bacchusDineIn
-from transaction.dinein import bacchusDineInOTK
+from transaction.dinein import bacchusDineIn, bacchusDineInOTK
 from transaction.takeout import bacchusTakeOut
 from transaction.takeout import bacchusTakeOutOTK
 from transaction.delivery import delivery
 from transaction.bulk import bulk
 from transaction.normal import miscellaneous
+from transaction.dinein import fd_dinein
 from transaction.normal import transaction
 from transaction.free import free
 from sequence.cashierSignon import cashierSignon
-from handles.tender_amount import tender_amount
+# from handles.tender_amount import tender_amount
 from pywinauto.findwindows import find_elements
-from function.clickButton import clickBtn
+# from function.clickButton import clickBtn
 from function.util import checkIfExistWithTitleRe
 from handles.open_reg import open_reg
 from sequence.backMgrMenu import clickBckMgrMenu
-from configuration.config import config
+# from configuration.config import config
 from transaction.open_auto import open_auto
-import time
+# import time
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+
+# backend="uia" default param.
 
 
 def main(backend="uia"):
-    
+
     otk_no = getattr(config, "OTK", False)
     pos_no = getattr(config, "POS", False)
         
@@ -43,13 +45,17 @@ def main(backend="uia"):
     restaurant_type = config.restaurant_type
     dlg1, dlg2 = None, None
 
-    # Step 1: Scan open windows
+    # Step 1: Scan open windows / Find all matching windows.
     windows = find_elements(title_re=".*W I N V Q P.*", control_type="Window", backend=backend)
 
     for elem in windows:
+        if dlg1 and dlg2:
+            print("Dialog1"+str(dlg1)+"Dialog2"+str(dlg2))
+            break
         app = Application(backend=backend).connect(handle=elem.handle)
         dlg = app.window(handle=elem.handle)
 
+        # look ffor element with title = pos_no
         if dlg.child_window(title=pos_no, control_type="Text").exists():
             dlg1 = dlg
             print("✅ Identified App1 (POS)")
@@ -57,7 +63,6 @@ def main(backend="uia"):
         elif dlg.child_window(title=otk_no, control_type="Text").exists():
             dlg2 = dlg
             print("✅ Identified App2 (OTK)")
-
 
     # Step 2: Open main POS window if not found
     if dlg1 is None and pos_no:
@@ -67,7 +72,6 @@ def main(backend="uia"):
         managerSignon(dlg1)
         cashierSignon(dlg1)
 
-
     if dlg2 is None and otk_no:
         print("ℹ️ OTK window not found, launching...")
         dlg2 = openGo(is_OTK=True)
@@ -75,7 +79,6 @@ def main(backend="uia"):
         managerSignon(dlg2)
         open_reg(dlg2)
         cashierSignon(dlg2)
-
 
     run = config.run_standard
 
@@ -85,12 +88,13 @@ def main(backend="uia"):
                 return transaction
         return None
     
-    for step in run :
-        if not hasattr(step, 'action'):
+    for step in run:
+        action = getattr(step, 'action', None) or getattr(step, '_action', None)
+        if not action:
             print(f"Comment: {getattr(step, '_comment', 'No comment provided')}")
             continue
-        action = step.action
 
+        
         if action and action.startswith('open'):
             print("1", action)
             open_auto(dlg1, action)
@@ -125,10 +129,9 @@ def main(backend="uia"):
 
         elif action == 'CASHIER_SIGN':
             print("8", action)
-            
             cashierSignon(dlg1)
-        
-        elif(action == 'FREE'):
+
+        elif (action == 'FREE'):
             print("9", action)
             free(dlg1)
 
@@ -136,7 +139,7 @@ def main(backend="uia"):
             print("10", action)
             currentTransaction = whatIsTransaction()
 
-            if(currentTransaction == None):
+            if (currentTransaction == None):
                 print("Can't find Transaction")
                 continue
             if currentTransaction == "DELIVERY":
@@ -151,10 +154,14 @@ def main(backend="uia"):
             clickBckMgrMenu(dlg1, backToMgr)
         elif action == 'DINE IN':
             transaction(dlg1, action)
+        elif action == 'FOOD_DINEIN':
+            # POS1 only, no need to check transaction type
+            print("11", action, dlg1)
+            fd_dinein(dlg1)
+
         else:
             print("cant find the action: ", action)
 
 
-    
 if __name__ == "__main__":
     main()
