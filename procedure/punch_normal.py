@@ -148,7 +148,7 @@ def punch_normal(dlg: any,
         # Default behavior is preserved for other transactions unless they opt-in via config.
         total_due_timeout_s = getattr(transaction, "total_due_timeout_s", None)
         if trantype == "FOOD_DINEIN" and total_due_timeout_s is None:
-            total_due_timeout_s = 90
+            total_due_timeout_s = 30
 
         total_due_start = time.time()
         while checkIfExist(dlg, 'TOTAL DUE:', control_type="Text"):
