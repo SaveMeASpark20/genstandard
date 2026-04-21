@@ -18,9 +18,9 @@ def bacchusDineInOTK(dlg1, dlgOTK, trantype='DINE IN'):
     
     # clickBtn(dlgOTK, trantype)
     sequence = config.bac_dine_in_OTK.punching_sequence
-    if(len(sequence) > 0 and checkIfExist(dlg1, trantype)):
+    if (len(sequence) > 0 and checkIfExist(dlg1, trantype)):
         clickBtn(dlg1, trantype)
-    if(len(sequence) > 0 and checkIfExist(dlgOTK, trantype)):
+    if (len(sequence) > 0 and checkIfExist(dlgOTK, trantype)):
         clickBtn(dlgOTK, trantype)
     for punch_data in sequence:
         punch_OTK(dlg1, dlgOTK, **vars(punch_data))

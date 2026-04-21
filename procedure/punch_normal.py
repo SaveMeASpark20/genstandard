@@ -147,6 +147,7 @@ def punch_normal(dlg: any,
             head_count_value = pax if pax is not None else getattr(transaction, "head_count", 1)
             handle_head_count(dlg, head_count=head_count_value)
 
+
         # Skips while loop for FOOD_DINE in preventing infinite loop.
         # Total Due text remains after tendering in FOOD_DINEIN, but not in other transactions.
         while checkIfExist(dlg, 'TOTAL DUE:', control_type="Text"):
