@@ -7,7 +7,22 @@ import time
 
 def initial_punch(dlg, prod, counts, prod_parent,  prod_addons, qty_prod_addons, meal_components, qty_meal_components, spec_ins, parent_spec_ins, qty_spec_ins, dito, open_memo, open_memo_prod ):
 
-    for index, (product, qty, parent,add_on, qpa, mc, qmc, dt) in enumerate(zip(prod, counts, prod_parent, prod_addons, qty_prod_addons,  meal_components, qty_meal_components, dito )):
+    """
+    # loops through products inside One Transaction.
+    zip
+    prod         = ["HALO-HALO", "CRMY\r\nCARBONARA"]
+    counts       = [1, 1]
+    prod_parent  = ["QA TEST\r\nPRODS", "QA TEST\r\nPRODS"]
+    prod_addons  = ["", "LECHE\r\nPLAN"]
+    qty_addons   = [0, 1]
+
+    # zip stitches em together
+    [("HALO-HALO", 1, "QA TEST\r\nPRODS", "", 0), ("CRMY\r\nCARBONARA", 1, "QA TEST\r\nPRODS", "LECHE\r\nPLAN", 1)]
+    
+    # enumerate
+    [(0, ("HALO-HALO", 1, "QA TEST\r\nPRODS", "", 0)), (1, ("CRMY\r\nCARBONARA", 1, "QA TEST\r\nPRODS", "LECHE\r\nPLAN", 1))]
+    """
+    for index, (product, qty, parent, add_on, qpa, mc, qmc, dt) in enumerate(zip(prod, counts, prod_parent, prod_addons, qty_prod_addons,  meal_components, qty_meal_components, dito )):
         current_parent =  prod_parent[0]
         if qty and product and parent:
                 if dt == 1:
@@ -72,11 +87,3 @@ def initial_punch(dlg, prod, counts, prod_parent,  prod_addons, qty_prod_addons,
             clickBtn(dlg, 'OPEN MEMO')
             inputText_Re(dlg, memo, 'Spcl Inst')
             send_keys("{ENTER}")
-
-
-
-            
-                
-        
-
-                
