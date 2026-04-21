@@ -136,20 +136,23 @@ def punch_normal(dlg: any,
             
         # tender the amount
         tender_amount(dlg, amounts, tenders)
-        # Prefer per-step pax override, otherwise fall back to per-transaction config, then default.
-        head_count_value = pax if pax is not None else getattr(transaction, "head_count", 1)
-        handle_head_count(dlg, head_count=head_count_value)
 
-        if checkIfExistVisibleClickable(dlg, 'CASH') and not checkIfExist(dlg, 'VQP', control_type='Window'):
-            print('Amount tendered not sufficient tender cash exact amount')
-            clickTender(dlg, 'CASH')
-        
+        if trantype != "FOOD_DINEIN":
+            if checkIfExistVisibleClickable(dlg, 'CASH') and not checkIfExist(dlg, 'VQP', control_type='Window'):
+                print('Amount tendered not sufficient tender cash exact amount')
+                clickTender(dlg, 'CASH')
+
+        # Prefer per-step pax override, otherwise fall back to per-transaction config, then default.
+        if trantype == "FOOD_DINEIN":
+            head_count_value = pax if pax is not None else getattr(transaction, "head_count", 1)
+            handle_head_count(dlg, head_count=head_count_value)
+
         # Skips while loop for FOOD_DINE in preventing infinite loop.
-        if trantype != "FOOD_DINEIN": 
-            while checkIfExist(dlg, 'TOTAL DUE:', control_type="Text"):
-                wait_time = 1
-                re_route(dlg)
-                print("waiting makita yung server input uli")
-                if checkIfExist(dlg, 'OK'):
-                    clickBtn(dlg, 'OK')
-                time.sleep(wait_time)
+        # Total Due text remains after tendering in FOOD_DINEIN, but not in other transactions.
+        while checkIfExist(dlg, 'TOTAL DUE:', control_type="Text"):
+            wait_time = 1
+            re_route(dlg)
+            print("waiting makita yung server input uli")
+            if checkIfExist(dlg, 'OK'):
+            clickBtn(dlg, 'OK')
+            time.sleep(wait_time)

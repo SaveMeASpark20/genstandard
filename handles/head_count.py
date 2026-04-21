@@ -17,5 +17,3 @@ def handle_head_count(dlg, head_count=1, yes_button='YES'):
 
     clickKeypad(dlg, 'check')
     clickBtn(dlg, yes_button)
-
-    re_route(dlg)
