@@ -23,7 +23,7 @@ from pywinauto.keyboard import send_keys
 
 def main(backend="uia"):
     pos_no = config.POS
-    otk_no = config.OTK
+    # otk_no = config.OTK
 
     dlg1, dlg2 = None, None
 
@@ -121,22 +121,22 @@ def main(backend="uia"):
     #     clickBtn(dlg1, 'OK')
     # print(prod)
     # clickNonBtn(dlg2, product, control_type='Text')
-    # dlg2.print_control_identifiers()
+    dlg1.print_control_identifiers()
     # Click button index 3 (for example)
     # clickBtn(dlg1, 'DISC')
     # inputText(dlg1, 11, "Manager Code:")
     
-    run = config.run_standard
+    # run = config.run_standard
     
-    for step in run :
-        if not hasattr(step, 'action'):
-            # print(f"Comment: {getattr(step, '_comment', 'No comment provided')}")
-            continue
-        action = step.action
+    # for step in run :
+    #     if not hasattr(step, 'action'):
+    #         # print(f"Comment: {getattr(step, '_comment', 'No comment provided')}")
+    #         continue
+    #     action = step.action
 
-        if action and action.startswith('open'):
-            print("action: ", action)
-            open_auto(dlg1, action)
+    #     if action and action.startswith('open'):
+    #         print("action: ", action)
+    #         open_auto(dlg1, action)
 
     # send_keys("text", with_spaces=True)
             
