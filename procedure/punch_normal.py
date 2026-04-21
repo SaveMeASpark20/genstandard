@@ -144,20 +144,12 @@ def punch_normal(dlg: any,
             print('Amount tendered not sufficient tender cash exact amount')
             clickTender(dlg, 'CASH')
         
-        # Prevent infinite waits if tendering fails and "TOTAL DUE" never clears.
-        # Default behavior is preserved for other transactions unless they opt-in via config.
-        total_due_timeout_s = getattr(transaction, "total_due_timeout_s", None)
-        if trantype == "FOOD_DINEIN" and total_due_timeout_s is None:
-            total_due_timeout_s = 30
-
-        total_due_start = time.time()
-        while checkIfExist(dlg, 'TOTAL DUE:', control_type="Text"):
-            wait_time = 1
-            re_route(dlg)
-            print("waiting makita yung server input uli")
-            if checkIfExist(dlg, 'OK'):
-                clickBtn(dlg, 'OK')
-            if total_due_timeout_s is not None and (time.time() - total_due_start) > float(total_due_timeout_s):
-                print(f"[TOTAL_DUE] Timeout after {total_due_timeout_s}s for trantype={trantype}. Stopping wait loop.")
-                break
-            time.sleep(wait_time)
+        # Skips while loop for FOOD_DINE in preventing infinite loop.
+        if trantype != "FOOD_DINEIN": 
+            while checkIfExist(dlg, 'TOTAL DUE:', control_type="Text"):
+                wait_time = 1
+                re_route(dlg)
+                print("waiting makita yung server input uli")
+                if checkIfExist(dlg, 'OK'):
+                    clickBtn(dlg, 'OK')
+                time.sleep(wait_time)
