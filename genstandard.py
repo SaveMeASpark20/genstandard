@@ -21,10 +21,8 @@ from handles.open_reg import open_reg
 from sequence.backMgrMenu import clickBckMgrMenu
 # from configuration.config import config
 from transaction.open_auto import open_auto
-# import time
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from procedure.manager_procedure import m_void
+import time
 
 # backend="uia" default param.
 
@@ -97,45 +95,50 @@ def main(backend="uia"):
         if action and action.startswith('open'):
             print("1", action)
             open_auto(dlg1, action)
+            
+        elif action and action.startswith('manager_void'):
+            print("2", action)
+            m_void(dlg1, action)
 
         elif action == "BACCDI":
-            print("2", action)
+            print("3", action)
             bacchusDineIn(dlg1)
         
         elif action == "BACCDIOTK":
-            print("3", action)
+            print("4", action)
             bacchusDineInOTK(dlg1, dlg2)
         
         elif action == "BACCTO":
-            print("3", action)
+            print("5", action)
             bacchusTakeOut(dlg1)
         
         elif action == "BACCTOOTK":
-            print("4", action)
+            print("6", action)
             bacchusTakeOutOTK(dlg1, dlg2)
 
         elif action == "DELIVERY":
-            print("5", action)
+            print("7", action)
             delivery(dlg1)
             
         elif action == "BULK":
-            print("6", action)
+            print("8", action)
             bulk(dlg1)
 
         elif action == 'MISC':
-            print("7", action)
+            print("9", action)
             miscellaneous(dlg1)
 
         elif action == 'CASHIER_SIGN':
-            print("8", action)
+            print("10", action)
+            
             cashierSignon(dlg1)
-
-        elif (action == 'FREE'):
-            print("9", action)
+        
+        elif(action == 'FREE'):
+            print("11", action)
             free(dlg1)
 
         elif action == 'BACKTOMGR':
-            print("10", action)
+            print("12", action)
             currentTransaction = whatIsTransaction()
 
             if (currentTransaction == None):

@@ -22,9 +22,8 @@ def openautomate(dlg: any, action : str, **kwargs):
         elif(name == 'clickCoords'):
             clickBtnCoords(dlg, value) 
         
-
         else:
-            print(name, "is not include on open")
+            print(name, "is not include on open automation")
 
 
 

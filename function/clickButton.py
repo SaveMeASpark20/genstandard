@@ -1,7 +1,6 @@
 from pywinauto import Application
 import time
 from pywinauto.keyboard import send_keys
-import pyautogui
 import re
 
 def clickBtn(dlg, button_name, retries=3, delay=2, control_type="Button", secondsToSleep=0):
